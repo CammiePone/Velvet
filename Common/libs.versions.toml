@@ -1,0 +1,50 @@
+[versions]
+minecraft = "1.21.1"
+
+# The latest versions are available at https://parchmentmc.org/docs/getting-started
+parchment_minecraft = "1.21"
+parchment_mappings = "2024.07.28"
+
+# https://projects.neoforged.net/neoforged/moddevgradle
+moddevgradle = "2.0.34-beta"
+# https://projects.neoforged.net/neoforged/neoform
+neoform = "1.21.1-20240808.144430"
+
+# minecraft dependencies
+mixin = "0.15.2+mixin.0.8.7"
+mixin_extras = "0.4.1"
+asm = "9.7"
+jetbrains_annotations = "25.0.0"
+apiguardian = "1.0.0"
+
+# other dependencies
+sparkweave = "0.502.0" # https://www.curseforge.com/minecraft/mc-mods/sparkweave/files/all
+emi = "1.1.14+1.21.1" # https://www.curseforge.com/minecraft/mc-mods/emi/files/all
+
+[libraries]
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+parchment_mappings = { module = "org.parchmentmc.data:parchment-1.21", version.ref = "parchment_mappings" }
+mixin = { module = "net.fabricmc:sponge-mixin", version.ref = "mixin" }
+mixin_extras = { module = "io.github.llamalad7:mixinextras-common", version.ref = "mixin_extras" }
+asm = { module = "org.ow2.asm:asm", version.ref = "asm" }
+asm_analysis = { module = "org.ow2.asm:asm-analysis", version.ref = "asm" }
+asm_commons = { module = "org.ow2.asm:asm-commons", version.ref = "asm" }
+asm_tree = { module = "org.ow2.asm:asm-tree", version.ref = "asm" }
+asm_util = { module = "org.ow2.asm:asm-util", version.ref = "asm" }
+jetbrains_annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains_annotations" }
+apiguardian = { module = "org.apiguardian:apiguardian-api", version.ref = "apiguardian" }
+
+sparkweave = { module = "dev.upcraft.sparkweave:Sparkweave-Common", version.ref = "sparkweave" }
+sparkweave_fabric = { module = "dev.upcraft.sparkweave:Sparkweave-Fabric", version.ref = "sparkweave" }
+sparkweave_neoforge = { module = "dev.upcraft.sparkweave:Sparkweave-NeoForge", version.ref = "sparkweave" }
+
+emi = { module = "dev.emi:emi-xplat-mojmap", version.ref = "emi" }
+emi_fabric = { module = "dev.emi:emi-fabric", version.ref = "emi" }
+emi_neoforge = { module = "dev.emi:emi-neoforge", version.ref = "emi" }
+
+[bundles]
+mixin = ["mixin", "mixin_extras", "asm", "asm_analysis", "asm_commons", "asm_tree", "asm_util"]
+
+[plugins]
+moddevgradle = { id = "net.neoforged.moddev", version.ref = "moddevgradle" }
+repositories = { id = "net.neoforged.moddev.repositories", version.ref = "moddevgradle" }

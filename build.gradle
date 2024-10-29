@@ -1,111 +1,140 @@
 plugins {
-    id 'fabric-loom' version "1.6-SNAPSHOT"
-    id 'io.github.ladysnake.chenille' version '0.13.0'
+	id 'idea'
+	id 'maven-publish'
 }
 
-archivesBaseName = project.archives_base_name
-group = project.maven_group
-version = project.mod_version
+def javaVersion = 21
 
-chenille {
-    configurePublishing {
-        mainArtifact = remapJar.archiveFile
-        withLadysnakeMaven()
-        withCurseforgeRelease()
-        withModrinthRelease()
-        withGithubRelease()
-    }
+group = maven_group_id
 
-    license = project.license_header
-    javaVersion = 21
+def ENV = System.getenv()
+def NOW = new Date()
+def buildTime = ENV.BUILD_TIME ?: NOW.format('yyyyMMddHHmmss')
+
+boolean isPreviewBuild = !ENV.TAG || ENV.TAG.matches(".+-.+")
+def buildNumber = !ENV.TAG ? ("${ENV.BUILD_NUMBER ? "build.${ENV.BUILD_NUMBER}" : buildTime}") : ""
+version = (ENV.TAG ?: "${libs.versions.minecraft.get()}-development") + ((isPreviewBuild && !ENV.TAG) ? "+${buildNumber}" : "")
+
+def mod_name = rootProject.name.replaceAll("-", "_").toLowerCase(Locale.ROOT)
+
+println("Building ${project.name} ${version}")
+
+subprojects {
+	apply plugin: 'java-library'
+	project.group = rootProject.group
+	project.version = rootProject.version
+
+	java {
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(javaVersion)
+			vendor = JvmVendorSpec.MICROSOFT
+		}
+		withSourcesJar()
+		withJavadocJar()
+	}
+
+	javadoc {
+		options.tags = ["reason"]
+	}
+
+	base {
+		archivesName = "${rootProject.name}-${project.name}"
+	}
+
+	jar {
+		from(rootProject.file("LICENSE.md")) {
+			rename { "LICENSE_${mod_name}.md" }
+		}
+		manifest {
+			attributes([
+					'Specification-Title'     : rootProject.name,
+					'Specification-Version'   : project.version,
+					'Implementation-Title'    : "${rootProject.name}-${project.name}",
+					'Maven-Artifact'          : "${maven_group_id}:${rootProject.name}-${project.name}:${project.version}",
+					'Implementation-Version'  : project.version,
+					'Implementation-Timestamp': NOW.format("yyyy-MM-dd'T'HH:mm:ssZ"),
+					'Timestamp'               : NOW.toInstant().toEpochMilli(),
+					'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
+					'Built-On-Minecraft'      : libs.versions.minecraft.get()
+			])
+		}
+	}
+
+	sourcesJar {
+		from(rootProject.file("LICENSE.md")) {
+			rename { "LICENSE_${mod_name}.md" }
+		}
+	}
+
+	tasks.withType(JavaCompile).configureEach {
+		it.options.encoding = "UTF-8"
+		it.options.release.set(javaVersion)
+	}
+
+	processResources {
+		filteringCharset "UTF-8"
+
+		def expandProps = [
+				"version"              : version,
+				"maven_group_id"       : maven_group_id,
+				"mod_id"               : mod_id,
+				"mod_display_name"     : mod_display_name,
+				"mod_description"      : mod_description,
+				"sources_url"          : sources_url,
+				"issues_url"           : issues_url,
+				"license_url"          : license_url,
+				"discord_url"          : discord_url,
+				"homepage_url"         : homepage_url,
+				"minecraft_version"    : libs.versions.minecraft.get(),
+				"curseforge_id"        : curseforge_id,
+				"modrinth_id"          : modrinth_id,
+
+				"fabric_loader_version": fabric.versions.fabric.loader.get(),
+				"java_version"         : javaVersion
+		]
+
+		filesMatching(['pack.mcmeta', '*.mod.json', 'META-INF/*mods.toml', '*.mixins.json']) {
+			expand expandProps
+		}
+		inputs.properties(expandProps)
+	}
+
+	publishing {
+		publications {
+			"mavenJava${project.name}"(MavenPublication) {
+				artifactId "${rootProject.name}-${project.name}"
+				from components.java
+			}
+		}
+	}
+
+	// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+	idea {
+		module {
+			downloadSources = true
+			downloadJavadoc = true
+		}
+	}
 }
-
-sourceSets {
-    testmod {
-        compileClasspath += main.compileClasspath
-        runtimeClasspath += main.runtimeClasspath
-    }
-}
-
-loom {
-    runs {
-        testmodClient {
-            client()
-            name = "Testmod Client"
-            source sourceSets.testmod
-        }
-    }
-}
-
-repositories {
-    chenille.repositories {
-        terraformers()
-        modrinth()
-    }
-}
-
-dependencies {
-    // To change the versions see the gradle.properties file
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
-//    modCompileOnly ("maven.modrinth:iris:${project.iris_version}")
-
-    compileOnly "org.jetbrains:annotations:${jb_annotations_version}"
-    compileOnly "com.google.code.findbugs:jsr305:${findbugs_version}"
-    compileOnly "org.apiguardian:apiguardian-api:${apiguardian_version}"
-
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.4.0-M1"
-
-    testmodCompileOnly "org.jetbrains:annotations:${jb_annotations_version}"
-    testmodImplementation sourceSets.main.output
-}
-
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
-
-loom {
-    accessWidenerPath = file("src/main/resources/satin.accesswidener")
-}
-
-java {
-    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-    // if it is present.
-    // If you remove this line, sources will not be generated.
-    withSourcesJar()
-}
-
-
 
 publishing {
-    publications {
-        create("relocation", MavenPublication) {
-            pom {
-                // Old artifact coordinates
-                groupId = "io.github.ladysnake"
-
-                distributionManagement {
-                    relocation {
-                        // New artifact coordinates
-                        groupId = "org.ladysnake"
-                        message = "groupId has been changed"
-                    }
-                }
-            }
-        }
-    }
+	repositories {
+		if (ENV.MAVEN_UPLOAD_URL) {
+			maven {
+				url = ENV.MAVEN_UPLOAD_URL
+				credentials {
+					username = ENV.MAVEN_UPLOAD_USERNAME
+					password = ENV.MAVEN_UPLOAD_PASSWORD
+				}
+			}
+		}
+	}
 }
 
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}"}
-    }
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+	module {
+		downloadSources = true
+		downloadJavadoc = true
+	}
 }
-

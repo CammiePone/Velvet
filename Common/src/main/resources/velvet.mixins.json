@@ -1,0 +1,32 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "dev.cammiescorner.velvet.mixin",
+	"plugin": "dev.cammiescorner.velvet.mixin.VelvetMixinPlugin",
+	"refmap": "${mod_id}.refmap.json",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+	],
+	"client": [
+		"client.AccessiblePassesShaderEffect",
+		"client.blockrendertype.LevelRendererMixin",
+		"client.blockrendertype.RenderTypeMixin",
+		"client.event.GameRendererMixin",
+		"client.event.LevelRendererMixin",
+		"client.event.MinecraftMixin",
+		"client.gl.CoreShaderMixin",
+		"client.gl.CustomFormatPostEffectProcessorMixin",
+		"client.gl.CustomFormatRenderTargetMixin",
+		"client.gl.DepthRenderTargetMixin",
+		"client.gl.UniformMixin",
+		"client.render.CompositeStateAccessor",
+		"client.render.LevelRendererMixin",
+		"client.render.RenderStateShardAccessor",
+		"client.render.RenderTypeAccessor",
+		"client.render.RenderTypeCompositeRenderTypeMixin",
+		"client.render.CompositeStateAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

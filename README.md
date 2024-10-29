@@ -12,7 +12,8 @@ You can add the library by inserting the following in your `build.gradle` (Requi
 
 **Note 1: since MC 1.17 builds, the Satin dependency must be lowercase.**  
 **Note 2: since MC 1.20.1 builds (1.14.0), the maven group changed from `io.github.ladysnake` to `org.ladysnake`.**  
-**Note 3: since June 2023, the maven url changed from `ladysnake.jfrog.io/artifactory/mods` to `maven.ladysnake.org/releases`.**  
+**Note 3: since June 2023, the maven url changed from `ladysnake.jfrog.io/artifactory/mods`
+to `maven.ladysnake.org/releases`.**
 
 ```gradle
 repositories {
@@ -38,12 +39,14 @@ You can then add the library version to your `gradle.properties`file:
 
 ```properties
 # Satin library
-satin_version = 2.x.y
+satin_version=2.x.y
 ```
 
-You can find the current version of Satin in the [releases](https://github.com/Ladysnake/Satin/releases) tab of the repository on Github.
+You can find the current version of Satin in the [releases](https://github.com/Ladysnake/Satin/releases) tab of the
+repository on Github.
 
-*If you wish your mod to be 100% standalone, you also need to include the `fabric-api-base` and `fabric-resource-loader-v0` modules from Fabric API in your mod jar.*
+*If you wish your mod to be 100% standalone, you also need to include the `fabric-api-base`
+and `fabric-resource-loader-v0` modules from Fabric API in your mod jar.*
 
 ## Using Satin
 
@@ -52,10 +55,11 @@ You can find the current version of Satin in the [releases](https://github.com/L
 Simply having Satin installed alters the game in a few ways, mainly related to ShaderEffects.
 
 - **Uniform fix**: Using a vector of integers as a uniform crashes the game in Vanilla because of a bad
-copy paste. Satin redirects a call to upload the right buffer.
+  copy paste. Satin redirects a call to upload the right buffer.
 - **Shader locations**: Satin patches shader processors to accept a resource domain in the specification
-of a program name and of a fragment/vertex shader file.
-- **Custom Target Formats**: Satin adds a `satin:format` property to [post-process shader JSONs](https://github.com/Ladysnake/Satin/wiki/Post-Process-Shader-format)
+  of a program name and of a fragment/vertex shader file.
+- **Custom Target Formats**: Satin adds a `satin:format` property
+  to [post-process shader JSONs](https://github.com/Ladysnake/Satin/wiki/Post-Process-Shader-format)
   to allow shader targets to specify different formats to `RGBA8`.
   Supported formats are `RGBA8`, `RGBA16`, `RGBA16F`, and `RGBA32F`.
 - ~~**Readable depth**~~: Satin offered access to a Framebuffer's depth texture before it was cool (superseded in 1.16).
@@ -64,7 +68,7 @@ Satin **does not** set the shader in `GameRenderer`, except if a mod registers a
 
 ### Shader Management
 
-Satin's main feature is the Shader Effect management facility. 
+Satin's main feature is the Shader Effect management facility.
 
 `ShaderEffect` is a Minecraft class implementing data driven post processing shaders, with a few caveats.
 First, those shader effects are initialized immediately at construction, but they must be initialized after the game has
@@ -98,24 +102,30 @@ public class GreyscaleMinecraft implements ClientModInitializer {
 }
 ```
 
-For examples of json shader definitions, look for the `assets/minecraft/shaders` folder in the minecraft source (description of those shaders can be found on the [Minecraft Wiki](https://minecraft.wiki/w/Shaders)). There is also a real application of this library in [Requiem](https://github.com/Ladysnake/Requiem/blob/d95c4f5c55/src/main/java/ladysnake/requiem/client/RequiemFx.java).
+For examples of json shader definitions, look for the `assets/minecraft/shaders` folder in the minecraft source (
+description of those shaders can be found on the [Minecraft Wiki](https://minecraft.wiki/w/Shaders)). There is also a
+real application of this library
+in [Requiem](https://github.com/Ladysnake/Requiem/blob/d95c4f5c55/src/main/java/ladysnake/requiem/client/RequiemFx.java).
 
 ### RenderLayer Utilities
 
-The `ManagedFramebuffer` and `ManagedShaderProgram` classes have methods to obtain clones of existing `RenderLayer` objects,
+The `ManagedFramebuffer` and `ManagedShaderProgram` classes have methods to obtain clones of existing `RenderLayer`
+objects,
 with a custom `Target`. This target causes draw calls to happen on the `ManagedFramebuffer` for the former, or using the
 shader program for the latter. This can be notably used to render custom effects on entities and block entities.
 
-For examples of entities using those, see [the relevant test mod](https://github.com/Ladysnake/Satin/blob/master/test_mods/render-layer/src/main/java/ladysnake/satinrenderlayer/).
+For examples of entities using those,
+see [the relevant test mod](https://github.com/Ladysnake/Satin/blob/master/test_mods/render-layer/src/main/java/ladysnake/satinrenderlayer/).
 
 **Regular blocks do not support custom render layers.** For advanced shader materials, you should consider using
 an alternative renderer like [Canvas](https://github.com/grondag/canvas).
 
 ### Shader Utilities
 
-Satin has a few utility classes and methods to facilitate working with shaders, not limited to `ShaderEffect`. 
-`ShaderLoader` provides a way to load, create and link OpenGL shader programs through a single method call, 
-`GlPrograms` offer helper methods that operate on those programs, and the `matrix` package helps with matrix retrieval and manipulation. 
+Satin has a few utility classes and methods to facilitate working with shaders, not limited to `ShaderEffect`.
+`ShaderLoader` provides a way to load, create and link OpenGL shader programs through a single method call,
+`GlPrograms` offer helper methods that operate on those programs, and the `matrix` package helps with matrix retrieval
+and manipulation.
 More information is available in the javadoc.
 
 ### Events
@@ -125,7 +135,7 @@ Satin adds in a few events for rendering purposes / related to shaders. Currentl
 - `EntitiesPostRenderCallback`: fired between entity rendering end and block entity rendering start
 - `PickEntityShaderCallback`: allows mods to add their own entity view shaders
 - `PostWorldRenderCallback`: allows mods to render things between the moment minecraft finishes rendering the world
-and the moment it starts rendering HUD's and GUI's
+  and the moment it starts rendering HUD's and GUI's
 - `ResolutionChangeCallback`: allows mods to react to resolution changes
 - `ShaderEffectRenderCallback`: fired at the time vanilla renders their post process shaders
 
@@ -133,4 +143,5 @@ and the moment it starts rendering HUD's and GUI's
 
 ## Full documentation
 
-This [repository's wiki](https://github.com/Ladysnake/Satin/wiki) provides documentation to write and use shaders with Satin API.
+This [repository's wiki](https://github.com/Ladysnake/Satin/wiki) provides documentation to write and use shaders with
+Satin API.

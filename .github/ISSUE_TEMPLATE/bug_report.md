@@ -14,9 +14,10 @@ assignees: ''
 *Steps to reproduce the behavior.*
 
 **Environment:**
- - Minecraft Version [e.g. 1.14.1]
- - Satin Version [e.g. 1.0.0]
- - Inside or Outside of a development environment ?
+
+- Minecraft Version [e.g. 1.14.1]
+- Satin Version [e.g. 1.0.0]
+- Inside or Outside of a development environment ?
 
 **Screenshots (optional)**
 *If applicable, add screenshots to help explain your problem.*
