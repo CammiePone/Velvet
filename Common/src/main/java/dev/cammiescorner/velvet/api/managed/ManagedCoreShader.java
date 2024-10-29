@@ -20,6 +20,7 @@ package dev.cammiescorner.velvet.api.managed;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import dev.cammiescorner.velvet.api.managed.uniform.UniformFinder;
 import dev.cammiescorner.velvet.api.util.RenderLayerHelper;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
@@ -47,7 +48,7 @@ public interface ManagedCoreShader extends UniformFinder {
 
 	/**
 	 * Gets a simple {@link RenderType} that is functionally identical to {@code baseLayer},
-	 * but with a different {@link RenderStateShard.Target} that enables this program.
+	 * but with a different {@link RenderStateShard.OutputStateShard} that enables this program.
 	 *
 	 * <p>The new {@link RenderType} will use this shader's vertex format as specified in {@link ShaderEffectManager#manageCoreShader(ResourceLocation, VertexFormat, Consumer)}.
 	 *

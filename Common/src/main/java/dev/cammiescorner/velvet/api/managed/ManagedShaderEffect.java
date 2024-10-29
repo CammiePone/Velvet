@@ -36,10 +36,10 @@ import static org.apiguardian.api.API.Status.*;
  * A post processing shader that is applied to the main render target
  * <p>
  * Post shaders loaded through {@link ShaderEffectManager#manage(ResourceLocation, Consumer)} are self-managed and will be
- * reloaded when shader assets are reloaded (through <tt>F3-T</tt> or <tt>/ladylib_shader_reload</tt>) or the
+ * reloaded when shader assets are reloaded (through <kbd>F3-T</kbd> or <kbd>/ladylib_shader_reload</kbd>) or the
  * screen resolution changes.
  * <p>
- * Examples of json-defined shader effects are available in <tt>assets/minecraft/shaders</tt>.
+ * Examples of json-defined shader effects are available in <kbd>assets/minecraft/shaders</kbd>.
  *
  * @see ShaderEffectManager
  * @since 1.0.0
