@@ -17,7 +17,7 @@
  */
 package dev.cammiescorner.velvet.api.util;
 
-import dev.cammiescorner.velvet.impl.BlockRenderLayerRegistry;
+import dev.cammiescorner.velvet.impl.BlockRenderTypeRegistry;
 import dev.cammiescorner.velvet.impl.RenderTypeDuplicator;
 import dev.cammiescorner.velvet.mixin.client.render.RenderStateShardAccessor;
 import net.minecraft.client.Minecraft;
@@ -30,7 +30,7 @@ import java.util.function.Consumer;
 import static org.apiguardian.api.API.Status.EXPERIMENTAL;
 
 @API(status = EXPERIMENTAL, since = "1.4.0")
-public final class RenderLayerHelper {
+public final class RenderTypeHelper {
 
 	/**
 	 * Gets the name of a {@link RenderStateShard}
@@ -52,8 +52,8 @@ public final class RenderLayerHelper {
 	 *
 	 * <p>A typical use of this method is to create a new render layer with a different target (eg. a target
 	 * that supports shaders). For example:
-	 * <pre>{@code RenderLayerHelper.copy(
-	 *      RenderLayer.getTranslucent(),
+	 * <pre>{@code RenderTypeHelper.copy(
+	 *      RenderType.translucent(),
 	 *      "mymod:special_layer",
 	 *      builder -> builder.target(someShaderEnablingTarget)
 	 * );}</pre>
@@ -75,7 +75,7 @@ public final class RenderLayerHelper {
 	}
 
 	/**
-	 * Register a custom RenderLayer for block rendering.
+	 * Register a custom RenderType for block rendering.
 	 *
 	 * <p><strong>Custom block render layers are usually not supported by alternative renderers.</strong>
 	 * Calling this method will have no visible effect if one of those is active.
@@ -86,7 +86,7 @@ public final class RenderLayerHelper {
 	 */
 	@Deprecated
 	@API(status = EXPERIMENTAL, since = "1.5.0")
-	public static void registerBlockRenderLayer(RenderType type) {
-		BlockRenderLayerRegistry.INSTANCE.registerRenderLayer(type);
+	public static void registerBlockRenderType(RenderType type) {
+		BlockRenderTypeRegistry.INSTANCE.registerRenderType(type);
 	}
 }

@@ -1,6 +1,6 @@
 [versions]
 # The latest versions are available at https://lambdaurora.dev/tools/import_quilt.html
-loom = "1.8.5"
+loom = "1.8.11"
 
 fabric_loader = "0.16.5"
 fabric_api = "0.105.0+1.21.1"

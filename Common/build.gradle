@@ -12,6 +12,21 @@ dependencies {
 	compileOnly libs.apiguardian
 
 	compileOnly "${libs.emi.asProvider().get()}:api"
+
+	testmodImplementation sourceSets.main.output
+}
+
+configurations {
+	testmod {
+		canBeResolved = false
+		canBeConsumed = true
+	}
+}
+
+artifacts {
+	testmod(sourceSets.testmod.output.classesDirs.singleFile) {
+		builtBy testmodClasses
+	}
 }
 
 neoForge {

@@ -19,7 +19,7 @@ package dev.cammiescorner.velvet.api.managed;
 
 import com.mojang.blaze3d.vertex.VertexFormat;
 import dev.cammiescorner.velvet.api.managed.uniform.UniformFinder;
-import dev.cammiescorner.velvet.api.util.RenderLayerHelper;
+import dev.cammiescorner.velvet.api.util.RenderTypeHelper;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
@@ -54,7 +54,7 @@ public interface ManagedCoreShader extends UniformFinder {
 	 *
 	 * @param baseLayer the layer to copy
 	 * @return a render layer using this shader program
-	 * @see RenderLayerHelper#copy(RenderType, String, Consumer)
+	 * @see RenderTypeHelper#copy(RenderType, String, Consumer)
 	 */
 	RenderType getRenderLayer(RenderType baseLayer);
 }

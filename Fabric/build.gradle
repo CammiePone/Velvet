@@ -21,6 +21,9 @@ dependencies {
 
 	modCompileOnly "${libs.emi.fabric.get()}:api"
 	modLocalRuntime libs.emi.fabric
+
+	testmodImplementation sourceSets.main.output
+	testmodCompileOnly project(path: ":Common", configuration: "testmod")
 }
 
 repositories {
@@ -81,6 +84,11 @@ loom {
 			sourceSet("main")
 			project(":Common").sourceSets.main
 		}
+
+		"${mod_id}_testmod" {
+			sourceSet sourceSets.testmod
+			sourceSet project(":Common").sourceSets.testmod
+		}
 	}
 
 	accessWidenerPath.set(file("src/main/resources/${mod_id}.accesswidener"))
@@ -115,6 +123,26 @@ loom {
 			ideConfigGenerated(true)
 			runDir("run/server")
 		}
+
+		testmodClient {
+			client()
+			setConfigName("Fabric Testmod Client")
+			ideConfigGenerated(true)
+			runDir("run/testmod")
+			source(sourceSets.testmod)
+
+			if (project.hasProperty('mc_uuid')) {
+				programArg("--uuid=${project.findProperty('mc_uuid')}")
+			}
+
+			if (project.hasProperty('mc_username')) {
+				programArg("--username=${project.findProperty('mc_username')}")
+			}
+
+			if (project.hasProperty('mc_java_agent_path')) {
+				vmArg("-javaagent:${project.findProperty('mc_java_agent_path')}")
+			}
+		}
 	}
 }
 
@@ -130,6 +158,14 @@ tasks.named("sourcesJar", Jar) {
 	from(project(":Common").sourceSets.main.allSource)
 }
 
+tasks.named("compileTestmodJava", JavaCompile).configure {
+	source(project(":Common").sourceSets.testmod.allJava)
+}
+
 processResources {
 	from project(":Common").sourceSets.main.resources
+}
+
+processTestmodResources {
+	from project(":Common").sourceSets.testmod.resources
 }

@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "*"
+license = "${license_url}" # Review your options at https://choosealicense.com
+issueTrackerURL = "${issues_url}"
+sourcesUrl = "${sources_url}" # custom property that we parse ourselves
+
+[[mods]]
+modId = "satintestcore"
+version = "${version}"
+displayName = "${mod_display_name} TestMod"
+displayURL = "${homepage_url}"
+logoFile = "icon.png"
+#credits = "" #optional
+authors = "Up"
+description = '''Testmod for ${mod_display_name}''' # Supports multiline text
+
+[[mixins]]
+config = "satintestcore.mixins.json"
+
+[[mixins]]
+config = "satintestcore.neoforge.mixins.json"
+
+# https://docs.neoforged.net/docs/gettingstarted/modfiles#dependency-configurations
+[dependencies]
+"${mod_id}" = [
+	{ modId = "neoforge", type = "required", versionRange = "*", ordering = "NONE", side = "BOTH", mc-publish = { ignore = true } },
+	{ modId = "minecraft", type = "required", versionRange = "[${minecraft_version}]", ordering = "NONE", side = "BOTH" },
+	{ modId = "sparkweave", type = "required", versionRange = "*", ordering = "NONE", side = "BOTH", mc-publish = { curseforge = "911456", modrinth = "nf68xfAw" } },
+]
+
+# Features are specific properties of the game environment, that you may want to declare you require. This example declares
+# that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
+# stop your mod loading on the server for example.
+#[features.${mod_id}_testmod]
+#openGLVersion="[3.2,)"

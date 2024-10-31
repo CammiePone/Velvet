@@ -19,7 +19,7 @@ package dev.cammiescorner.velvet.api.managed;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.Window;
-import dev.cammiescorner.velvet.api.util.RenderLayerHelper;
+import dev.cammiescorner.velvet.api.util.RenderTypeHelper;
 import net.minecraft.client.renderer.RenderType;
 import org.apiguardian.api.API;
 import org.jetbrains.annotations.Nullable;
@@ -68,7 +68,7 @@ public interface ManagedRenderTarget {
 	 *
 	 * @param baseLayer the layer to copy
 	 * @return a render layer using this render target
-	 * @see RenderLayerHelper#copy(RenderType, String, Consumer)
+	 * @see RenderTypeHelper#copy(RenderType, String, Consumer)
 	 */
 	RenderType getRenderLayer(RenderType baseLayer);
 }

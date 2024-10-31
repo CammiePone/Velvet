@@ -1,0 +1,4 @@
+org.ladysnake.satinbasictest.SatinBasicTest
+org.ladysnake.satincustomformattest.SatinCustomFormatTest
+org.ladysnake.satindepthtest.SatinDepthTest
+org.ladysnake.satinrenderlayer.SatinRenderLayerTest

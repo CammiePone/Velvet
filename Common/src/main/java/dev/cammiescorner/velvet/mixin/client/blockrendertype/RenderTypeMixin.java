@@ -18,7 +18,7 @@
 package dev.cammiescorner.velvet.mixin.client.blockrendertype;
 
 import com.google.common.collect.ImmutableList;
-import dev.cammiescorner.velvet.impl.BlockRenderLayerRegistry;
+import dev.cammiescorner.velvet.impl.BlockRenderTypeRegistry;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,7 +41,7 @@ public abstract class RenderTypeMixin extends RenderStateShard {
 		info.setReturnValue(
 				ImmutableList.builder()
 						.addAll(info.getReturnValue())
-						.addAll(BlockRenderLayerRegistry.INSTANCE.getTypes()
+						.addAll(BlockRenderTypeRegistry.INSTANCE.getTypes()
 						).build());
 	}
 }

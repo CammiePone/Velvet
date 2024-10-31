@@ -17,7 +17,7 @@
  */
 package dev.cammiescorner.velvet.mixin.client.blockrendertype;
 
-import dev.cammiescorner.velvet.impl.BlockRenderLayerRegistry;
+import dev.cammiescorner.velvet.impl.BlockRenderTypeRegistry;
 import net.minecraft.client.Camera;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.renderer.GameRenderer;
@@ -59,7 +59,7 @@ public abstract class LevelRendererMixin {
 	)
 	private void renderCustom(DeltaTracker tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
 		// Render all the custom ones
-		for(RenderType layer : BlockRenderLayerRegistry.INSTANCE.getTypes()) {
+		for(RenderType layer : BlockRenderTypeRegistry.INSTANCE.getTypes()) {
 			renderSectionLayer(layer, camera.getPosition().x, camera.getPosition().y, camera.getPosition().z, matrix4f, matrix4f2);
 		}
 	}

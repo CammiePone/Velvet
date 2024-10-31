@@ -22,15 +22,15 @@ import net.minecraft.client.renderer.RenderType;
 
 import java.util.Set;
 
-public final class BlockRenderLayerRegistry {
-	public static final BlockRenderLayerRegistry INSTANCE = new BlockRenderLayerRegistry();
-	private final Set<RenderType> renderLayers = new ObjectArraySet<>();   // ArraySet for faster iteration
+public final class BlockRenderTypeRegistry {
+	public static final BlockRenderTypeRegistry INSTANCE = new BlockRenderTypeRegistry();
+	private final Set<RenderType> renderTypes = new ObjectArraySet<>();   // ArraySet for faster iteration
 	private volatile boolean registryLocked = false;
 
-	private BlockRenderLayerRegistry() {
+	private BlockRenderTypeRegistry() {
 	}
 
-	public void registerRenderLayer(RenderType type) {
+	public void registerRenderType(RenderType type) {
 		if(registryLocked) {
 			throw new IllegalStateException(String.format(
 					"RenderType %s was added too late.",
@@ -38,11 +38,11 @@ public final class BlockRenderLayerRegistry {
 			));
 		}
 
-		renderLayers.add(type);
+		renderTypes.add(type);
 	}
 
 	public Set<RenderType> getTypes() {
 		registryLocked = true;
-		return renderLayers;
+		return renderTypes;
 	}
 }
