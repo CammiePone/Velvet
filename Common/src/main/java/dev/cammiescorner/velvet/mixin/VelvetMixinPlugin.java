@@ -41,7 +41,7 @@ public final class VelvetMixinPlugin implements IMixinConfigPlugin {
 			ALLOW_RENDER_LAYER_MIXINS = false;
 		}
 		else {
-			if(Velvet.LOADER.isModLoaded("sodium") || Velvet.LOADER.isModLoaded("rubidium"))
+			if(Velvet.LOADER.isModLoaded("sodium") || Velvet.LOADER.isModLoaded("rubidium") || Velvet.LOADER.isModLoaded("embeddium"))
 				LOGGER.warn("[Velvet] Sodium is present, custom block renders may not work");
 
 			ALLOW_RENDER_LAYER_MIXINS = true;
