@@ -33,9 +33,9 @@ public abstract class RenderTypeMixin extends RenderStateShard {
 	}
 
 	@Inject(
-			method = "chunkBufferLayers",
-			at = @At("RETURN"),
-			cancellable = true
+		method = "chunkBufferLayers",
+		at = @At("RETURN"),
+		cancellable = true
 	)
 	private static void getBlockLayers(CallbackInfoReturnable<ImmutableList<Object>> info) {
 		info.setReturnValue(

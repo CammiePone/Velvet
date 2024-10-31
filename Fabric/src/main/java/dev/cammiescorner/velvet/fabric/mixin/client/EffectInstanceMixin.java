@@ -72,9 +72,9 @@ public abstract class EffectInstanceMixin implements SamplerAccess {
 		)
 	)
 	ResourceLocation constructProgramIdentifier(String arg, Operation<ResourceLocation> original, ResourceProvider unused, String id) {
-		if(!id.contains(":")) {
+		if(!id.contains(":"))
 			return original.call(arg);
-		}
+
 		ResourceLocation split = ResourceLocation.parse(id);
 		return ResourceLocation.fromNamespaceAndPath(split.getNamespace(), "shaders/program/" + split.getPath() + ".json");
 	}
@@ -88,9 +88,9 @@ public abstract class EffectInstanceMixin implements SamplerAccess {
 		)
 	)
 	private static ResourceLocation constructProgramIdentifier(String arg, Operation<ResourceLocation> original, ResourceProvider unused, Program.Type shaderType, String id) {
-		if(!arg.contains(":")) {
+		if(!arg.contains(":"))
 			return original.call(arg);
-		}
+
 		ResourceLocation split = ResourceLocation.parse(id);
 		return ResourceLocation.fromNamespaceAndPath(split.getNamespace(), "shaders/program/" + split.getPath() + shaderType.getExtension());
 	}

@@ -49,13 +49,13 @@ public abstract class CustomFormatRenderTargetMixin {
 	}
 
 	@ModifyArg(
-			method = "createBuffers",
-			slice = @Slice(
-					from = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/pipeline/RenderTarget;setFilterMode(IZ)V"),
-					to = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GlStateManager;_glBindFramebuffer(II)V", remap = false)
-			),
-			at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GlStateManager;_texImage2D(IIIIIIIILjava/nio/IntBuffer;)V", remap = false),
-			index = 2
+		method = "createBuffers",
+		slice = @Slice(
+			from = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/pipeline/RenderTarget;setFilterMode(IZ)V"),
+			to = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GlStateManager;_glBindFramebuffer(II)V", remap = false)
+		),
+		at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GlStateManager;_texImage2D(IIIIIIIILjava/nio/IntBuffer;)V", remap = false),
+		index = 2
 	)
 	private int satin$modifyInternalFormat(int internalFormat) {
 		return this.format;

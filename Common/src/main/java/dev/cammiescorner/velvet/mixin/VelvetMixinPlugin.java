@@ -60,9 +60,9 @@ public final class VelvetMixinPlugin implements IMixinConfigPlugin {
 
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-		if(mixinClassName.contains("blockrendertype")) {
+		if(mixinClassName.contains("blockrendertype"))
 			return ALLOW_RENDER_LAYER_MIXINS;
-		}
+
 		return true;
 	}
 

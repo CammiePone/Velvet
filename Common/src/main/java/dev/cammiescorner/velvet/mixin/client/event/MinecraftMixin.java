@@ -29,10 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin {
-
-	@Final
-	@Shadow
-	private Window window;
+	@Final @Shadow private Window window;
 
 	@Inject(method = "resizeDisplay", at = @At("RETURN"))
 	private void hookResolutionChanged(CallbackInfo info) {

@@ -45,16 +45,16 @@ public class CustomFormatPostEffectProcessorMixin {
 	 * @reason need to clean up state if an exception is thrown
 	 */
 	@Inject(
-			method = "load",
-			slice = @Slice(
-					from = @At(value = "CONSTANT:FIRST", args = "stringValue=targets"),
-					to = @At(value = "CONSTANT:FIRST", args = "stringValue=passes")
-			),
-			at = @At(
-					value = "INVOKE",
-					target = "Lnet/minecraft/server/ChainedJsonException;forException(Ljava/lang/Exception;)Lnet/minecraft/server/ChainedJsonException;"
-			),
-			allow = 1
+		method = "load",
+		slice = @Slice(
+			from = @At(value = "CONSTANT:FIRST", args = "stringValue=targets"),
+			to = @At(value = "CONSTANT:FIRST", args = "stringValue=passes")
+		),
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/server/ChainedJsonException;forException(Ljava/lang/Exception;)Lnet/minecraft/server/ChainedJsonException;"
+		),
+		allow = 1
 	)
 	private void cleanupCustomTargetFormat(TextureManager textureManager, ResourceLocation id, CallbackInfo ci) {
 		CustomFormatRenderTarget.clearCustomFormat();

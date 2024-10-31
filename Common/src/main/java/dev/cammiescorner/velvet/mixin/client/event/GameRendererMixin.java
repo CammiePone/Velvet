@@ -44,8 +44,8 @@ public abstract class GameRendererMixin {
 	 * Fires {@link ShaderEffectRenderCallback#EVENT}
 	 */
 	@Inject(
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;doEntityOutline()V", shift = AFTER),
-			method = "render"
+		method = "render",
+		at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;doEntityOutline()V", shift = AFTER)
 	)
 	private void hookShaderRender(DeltaTracker tickCounter, boolean tick, CallbackInfo ci) {
 		ShaderEffectRenderCallback.EVENT.invoker().renderShaderEffects(tickCounter.getGameTimeDeltaPartialTick(tick));

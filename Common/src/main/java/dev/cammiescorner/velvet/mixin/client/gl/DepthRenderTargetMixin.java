@@ -48,8 +48,8 @@ public abstract class DepthRenderTargetMixin implements ReadableDepthRenderTarge
 	@Shadow public abstract void bindWrite(boolean boolean_1);
 
 	@Inject(
-			method = "createBuffers",
-			at = @At(value = "FIELD", opcode = Opcodes.PUTFIELD, target = "Lcom/mojang/blaze3d/pipeline/RenderTarget;depthBufferId:I", shift = AFTER)
+		method = "createBuffers",
+		at = @At(value = "FIELD", opcode = Opcodes.PUTFIELD, target = "Lcom/mojang/blaze3d/pipeline/RenderTarget;depthBufferId:I", shift = AFTER)
 	)
 	private void initFbo(int width, int height, boolean flushErrors, CallbackInfo ci) {
 		if(this.useDepth) {

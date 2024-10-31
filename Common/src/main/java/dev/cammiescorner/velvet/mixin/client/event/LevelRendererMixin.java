@@ -44,10 +44,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LevelRendererMixin {
 	@Unique private Frustum frustum;
 
-	//TODO
 	@ModifyVariable(
-			method = "renderLevel",
-			at = @At(value = "CONSTANT", args = "stringValue=entities", ordinal = 0, shift = At.Shift.BEFORE)
+		method = "renderLevel",
+		at = @At(value = "CONSTANT", args = "stringValue=entities", ordinal = 0, shift = At.Shift.BEFORE)
 	)
 	private Frustum captureFrustum(Frustum frustum) {
 		this.frustum = frustum;
@@ -56,28 +55,28 @@ public abstract class LevelRendererMixin {
 
 
 	@Inject(
-			method = "renderLevel",
-			at = @At(value = "CONSTANT", args = "stringValue=entities", ordinal = 0)
+		method = "renderLevel",
+		at = @At(value = "CONSTANT", args = "stringValue=entities", ordinal = 0)
 	)
 	private void firePreRenderEntities(DeltaTracker tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
 		EntitiesPreRenderCallback.EVENT.invoker().beforeEntitiesRender(camera, frustum, tickCounter.getGameTimeDeltaPartialTick(false));
 	}
 
 	@Inject(
-			method = "renderLevel",
-			at = @At(value = "CONSTANT", args = "stringValue=blockentities", ordinal = 0)
+		method = "renderLevel",
+		at = @At(value = "CONSTANT", args = "stringValue=blockentities", ordinal = 0)
 	)
 	private void firePostRenderEntities(DeltaTracker tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
 		EntitiesPostRenderCallback.EVENT.invoker().onEntitiesRendered(camera, frustum, tickCounter.getGameTimeDeltaPartialTick(false));
 	}
 
 	@Inject(
-			method = "renderLevel",
-			slice = @Slice(from = @At(value = "FIELD:LAST", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/renderer/LevelRenderer;transparencyChain:Lnet/minecraft/client/renderer/PostChain;")),
-			at = {
-					@At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/PostChain;process(F)V"),
-					@At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;depthMask(Z)V", ordinal = 1, shift = At.Shift.AFTER, remap = false)
-			}
+		method = "renderLevel",
+		slice = @Slice(from = @At(value = "FIELD:LAST", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/renderer/LevelRenderer;transparencyChain:Lnet/minecraft/client/renderer/PostChain;")),
+		at = {
+			@At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/PostChain;process(F)V"),
+			@At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;depthMask(Z)V", ordinal = 1, shift = At.Shift.AFTER, remap = false)
+		}
 	)
 	private void hookPostWorldRender(DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f frustumMatrix, Matrix4f projectionMatrix, CallbackInfo ci, @Local PoseStack matrices) {
 		((ReadableDepthRenderTarget) Minecraft.getInstance().getMainRenderTarget()).freezeDepthMap();

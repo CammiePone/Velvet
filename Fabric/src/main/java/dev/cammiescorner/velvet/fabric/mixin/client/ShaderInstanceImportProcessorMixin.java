@@ -19,9 +19,8 @@ public class ShaderInstanceImportProcessorMixin {
 
 	@ModifyVariable(method = "applyImport", at = @At("STORE"), ordinal = 0, argsOnly = true)
 	private String modifyImportId(String id, boolean inline, @Share("name") LocalRef<String> ref) {
-		if(!inline && ref.get().contains(String.valueOf(ResourceLocation.NAMESPACE_SEPARATOR))) {
+		if(!inline && ref.get().contains(String.valueOf(ResourceLocation.NAMESPACE_SEPARATOR)))
 			return VelvetShaderInstance.rewriteAsId(id, ref.get()).toString();
-		}
 
 		return id;
 	}
