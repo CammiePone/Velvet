@@ -10,7 +10,9 @@ Velvet is a multiloader library for making and using your own OpenGL shaders bas
 
 ---
 
-## Adding Velvet to your project (if your project is Fabric only, please use [Satin](https://github.com/Ladysnake/Satin) instead)
+## Adding Velvet to your project
+
+If your project is Fabric only, please use [Satin](https://github.com/Ladysnake/Satin) instead.
 
 You can add Velvet by putting the following in your `build.gradle`:
 ```gradle
