@@ -27,13 +27,15 @@ import dev.cammiescorner.velvet.api.managed.ManagedShaderEffect;
 import dev.cammiescorner.velvet.api.managed.ShaderEffectManager;
 import dev.cammiescorner.velvet.api.managed.uniform.Uniform1f;
 import dev.cammiescorner.velvet.api.util.RenderTypeHelper;
-import org.ladysnake.satintestcore.SatinTestCore;
 import dev.upcraft.sparkweave.api.client.event.RegisterEntityRenderersEvent;
 import dev.upcraft.sparkweave.api.entrypoint.ClientEntryPoint;
 import dev.upcraft.sparkweave.api.platform.ModContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import org.ladysnake.satintestcore.SatinTestCore;
+import org.ladysnake.satintestcore.common.block.SatinTestBlocks;
+import org.ladysnake.satintestcore.event.BlockRenderLayerMap;
 import org.ladysnake.satintestcore.event.EndClientTickEvent;
 
 public final class SatinRenderLayerTest implements ClientEntryPoint {
@@ -52,7 +54,7 @@ public final class SatinRenderLayerTest implements ClientEntryPoint {
 	public void onInitializeClient(ModContainer mod) {
 		RenderType blockRenderLayer = illusionBuffer.getRenderLayer(RenderType.translucent());
 		RenderTypeHelper.registerBlockRenderType(blockRenderLayer);
-//		BlockRenderLayerMap.INSTANCE.putBlock(SatinTestBlocks.DEBUG_BLOCK, blockRenderLayer);
+		BlockRenderLayerMap.INSTANCE.putBlock(SatinTestBlocks.DEBUG_BLOCK, blockRenderLayer);
 		RegisterEntityRenderersEvent.EVENT.register(event -> {
 			event.registerRenderer(SatinTestCore.ILLUSION_GOLEM, IllusionGolemEntityRenderer::new);
 			event.registerRenderer(SatinTestCore.RAINBOW_WITHER, RainbowWitherEntityRenderer::new);
