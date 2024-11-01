@@ -8,7 +8,7 @@
 
 ## If you're only working with Fabric, please use [Satin](https://github.com/Ladysnake/Satin).
 
-Velvet is a multiloader (Fabric & NeoForge) library for making and using your own OpenGL shaders based off of Satin. I highly suggest supporting the Satin developers, but don't pester them with bug reports if you're using Velvet.
+Velvet is a multiloader library for making and using your own OpenGL shaders based off of Satin. I highly suggest supporting the Satin developers, but don't pester them with bug reports if you're using Velvet.
 
 ---
 
