@@ -4,9 +4,9 @@
 	<img src="https://mod-assets.upcraft.dev/promo/general/multiloader_banner.png" width="480" alt="">
 </div>
 
-## If you're only working with Fabric, please use [Satin](https://github.com/Ladysnake/Satin).
-
 ---
+
+## If you're only working with Fabric, please use [Satin](https://github.com/Ladysnake/Satin).
 
 Velvet is a multiloader (Fabric & NeoForge) library for making and using your own OpenGL shaders based off of Satin. I highly suggest supporting the Satin developers, but don't pester them with bug reports if you're using Velvet.
 
