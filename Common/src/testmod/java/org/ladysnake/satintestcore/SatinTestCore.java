@@ -41,6 +41,7 @@ public class SatinTestCore implements MainEntryPoint {
 		SatinTestDataComponents.DATA_COMPONENTS.accept(registryService);
 		SatinTestBlocks.BLOCKS.accept(registryService);
 		SatinTestItems.ITEMS.accept(registryService);
+		SatinTestCreativeTabs.CREATIVE_TABS.accept(registryService);
 		SatinTestEntities.ENTITY_TYPES.accept(registryService);
 	}
 }

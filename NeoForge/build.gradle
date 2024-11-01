@@ -109,6 +109,7 @@ neoForge {
 			logLevel = org.slf4j.event.Level.DEBUG
 
 			systemProperty 'forge.logging.markers', 'REGISTRIES'
+			systemProperty 'sparkweave.debug', 'true'
 
 			gameDirectory = project.file('run')
 		}
