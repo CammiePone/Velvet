@@ -8,9 +8,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.ladysnake.satintestcore.SatinTestCore;
 import org.ladysnake.satintestcore.init.SatinTestDebugBehaviors;
+
+import java.util.List;
 
 public abstract class DebugBehavior {
 
@@ -23,6 +28,10 @@ public abstract class DebugBehavior {
 	}
 
 	public abstract void call(Level level, Player player, InteractionHand hand);
+
+	public void appendHoverTooltip(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+
+	}
 
 	public static abstract class Client extends DebugBehavior {
 

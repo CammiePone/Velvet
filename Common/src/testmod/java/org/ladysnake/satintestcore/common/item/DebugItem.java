@@ -25,6 +25,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.ladysnake.satintestcore.common.debugbehavior.DebugBehavior;
 import org.ladysnake.satintestcore.init.SatinTestDataComponents;
@@ -43,7 +44,7 @@ public class DebugItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 	    ItemStack stack = player.getItemInHand(hand);
-	    Holder<DebugBehavior> currentDebugBehavior = stack.get(SatinTestDataComponents.DEBUG_BEHAVIOR.get());
+	    Holder<DebugBehavior> currentDebugBehavior = stack.getOrDefault(SatinTestDataComponents.DEBUG_BEHAVIOR.get(), SatinTestDebugBehaviors.BASIC.holder());
         if (player.isCrouching() && !world.isClientSide()) {
             if (SatinTestDebugBehaviors.DEBUG_BEHAVIORS_REGISTRY.size() > 1) {
 
@@ -57,13 +58,20 @@ public class DebugItem extends Item {
                 player.displayClientMessage(Component.translatable("message.velvettestcore.debug_behavior_switched", newDebugBehavior.value().getName()), true);
             }
         } else if (!player.isCrouching()) {
-	        //noinspection DataFlowIssue
 	        currentDebugBehavior.value().call(world, player, hand);
         }
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
     }
 
-    @Override
+	@Override
+	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+		super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+		DebugBehavior debugBehavior = stack.<Holder<DebugBehavior>>getOrDefault(SatinTestDataComponents.DEBUG_BEHAVIOR.get(), SatinTestDebugBehaviors.BASIC.holder()).value();
+		tooltipComponents.add(Component.translatable("tooltip.velvettestcore.debug_item.mode", debugBehavior.getName()));
+		debugBehavior.appendHoverTooltip(stack, context, tooltipComponents, tooltipFlag);
+	}
+
+	@Override
     public boolean isFoil(ItemStack itemStack) {
         return true;
     }

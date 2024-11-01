@@ -1,4 +1,13 @@
 {
 	"itemGroup.velvettestcore.items": "Velvet Testmod",
-	"message.velvettestcore.debug_behavior_switched": "Switched mode to %s"
+	"block.velvettestcore.debug_block": "Debug Block",
+	"item.velvettestcore.debug_item": "Debug Item",
+	"tooltip.velvettestcore.debug_item.mode": "Selected debug behavior: %s",
+	"tooltip.velvettestcore.debug_behavior.generic.enabled": "Enabled!",
+	"tooltip.velvettestcore.debug_behavior.generic.disabled": "Disabled.",
+	"tooltip.velvettestcore.debug_behavior.generic.color": "Color: %s",
+	"message.velvettestcore.debug_behavior_switched": "Switched mode to %s",
+	"velvettestcore.debug_behavior.velvettestcore.basic": "Basic Blit Shader (random color)",
+	"velvettestcore.debug_behavior.velvettestcore.custom_format": "Custom Framebuffer Formats Test",
+	"velvettestcore.debug_behavior.velvettestcore.depth_test": "Reload DepthFx Shader"
 }
