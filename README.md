@@ -77,7 +77,7 @@ For the latest version of Velvet, please check the [GitHub Releases](https://git
 
 ## Pull Requests
 
-Unless it's to fix a bug exclusive to Velvet, you will need to get your PR changes merged into Satin in order to be merged into Velvet. I want to keep parity with Satin, as it simplifies a lot of things between the two mods.
+Unless it's to fix a bug exclusive to Velvet, you will need to make a PR with the same changes to Satin, and have it be accepted in order for it to be merged into Velvet. I want to keep parity with Satin, as it simplifies a lot of things between the two mods.
 
 ---
 
