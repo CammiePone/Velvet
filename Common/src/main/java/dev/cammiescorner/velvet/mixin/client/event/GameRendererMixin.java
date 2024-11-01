@@ -59,7 +59,8 @@ public abstract class GameRendererMixin {
 	private void useCustomEntityShader(@Nullable Entity entity, CallbackInfo info) {
 		if(this.postEffect == null) {
 			// Mixin does not like method references to shadowed methods
-			PickEntityShaderCallback.EVENT.invoker().pickEntityShader(entity, this::loadEffect, () -> this.postEffect);
+			// noinspection Convert2MethodRef
+			PickEntityShaderCallback.EVENT.invoker().pickEntityShader(entity, resourceLocation -> loadEffect(resourceLocation), () -> this.postEffect);
 		}
 	}
 

@@ -5,7 +5,7 @@ issueTrackerURL = "${issues_url}"
 sourcesUrl = "${sources_url}" # custom property that we parse ourselves
 
 [[mods]]
-modId = "satintestcore"
+modId = "velvettestcore"
 version = "${version}"
 displayName = "${mod_display_name} TestMod"
 displayURL = "${homepage_url}"
@@ -15,10 +15,10 @@ authors = "Up"
 description = '''Testmod for ${mod_display_name}''' # Supports multiline text
 
 [[mixins]]
-config = "satintestcore.mixins.json"
+config = "velvettestcore.mixins.json"
 
 [[mixins]]
-config = "satintestcore.neoforge.mixins.json"
+config = "velvettestcore.neoforge.mixins.json"
 
 # https://docs.neoforged.net/docs/gettingstarted/modfiles#dependency-configurations
 [dependencies]

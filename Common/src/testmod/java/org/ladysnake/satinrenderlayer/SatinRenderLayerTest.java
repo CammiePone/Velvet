@@ -39,22 +39,23 @@ import org.ladysnake.satintestcore.event.BlockRenderLayerMap;
 import org.ladysnake.satintestcore.event.EndClientTickEvent;
 
 public final class SatinRenderLayerTest implements ClientEntryPoint {
+	public static final String MOD_ID = "velvetrenderlayer";
     /* * * * ManagedShaderEffect-based RenderLayer entity rendering * * * */
-    public static final ManagedShaderEffect illusionEffect = ShaderEffectManager.getInstance().manage(ResourceLocation.fromNamespaceAndPath("satinrenderlayer", "shaders/post/illusion.json"),
+    public static final ManagedShaderEffect illusionEffect = ShaderEffectManager.getInstance().manage(ResourceLocation.fromNamespaceAndPath(MOD_ID, "shaders/post/illusion.json"),
             effect -> effect.setUniformValue("ColorModulate", 1.2f, 0.7f, 0.2f, 1.0f));
     public static final ManagedRenderTarget illusionBuffer = illusionEffect.getTarget("final");
 
     /* * * * ManagedShaderProgram-based RenderLayer entity rendering * * * */
-    public static final ManagedCoreShader rainbow = ShaderEffectManager.getInstance().manageCoreShader(ResourceLocation.fromNamespaceAndPath("satinrenderlayer", "rainbow"));
+    public static final ManagedCoreShader rainbow = ShaderEffectManager.getInstance().manageCoreShader(ResourceLocation.fromNamespaceAndPath(MOD_ID, "rainbow"));
     private static final Uniform1f uniformSTime = rainbow.findUniform1f("STime");
 
     private static int ticks;
 
 	@Override
 	public void onInitializeClient(ModContainer mod) {
-		RenderType blockRenderLayer = illusionBuffer.getRenderLayer(RenderType.translucent());
-		RenderTypeHelper.registerBlockRenderType(blockRenderLayer);
-		BlockRenderLayerMap.INSTANCE.putBlock(SatinTestBlocks.DEBUG_BLOCK, blockRenderLayer);
+		RenderType blockRenderType = illusionBuffer.getRenderType(RenderType.translucent());
+		RenderTypeHelper.registerBlockRenderType(blockRenderType);
+		BlockRenderLayerMap.INSTANCE.putBlock(SatinTestBlocks.DEBUG_BLOCK, blockRenderType);
 		RegisterEntityRenderersEvent.EVENT.register(event -> {
 			event.registerRenderer(SatinTestCore.ILLUSION_GOLEM, IllusionGolemEntityRenderer::new);
 			event.registerRenderer(SatinTestCore.RAINBOW_WITHER, RainbowWitherEntityRenderer::new);

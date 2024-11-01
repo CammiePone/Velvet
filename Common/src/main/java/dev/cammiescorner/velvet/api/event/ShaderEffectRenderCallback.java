@@ -22,7 +22,7 @@ import dev.upcraft.sparkweave.event.EventFactoryImpl;
 
 public interface ShaderEffectRenderCallback {
 	/**
-	 * Fired when Minecraft renders the entity outline framebuffer.
+	 * Fired when Minecraft renders the entity outline render target.
 	 * Post process shader effects should generally be rendered at that time.
 	 */
 	Event<ShaderEffectRenderCallback> EVENT = EventFactoryImpl.create(ShaderEffectRenderCallback.class,

@@ -63,12 +63,12 @@ public interface ManagedRenderTarget {
 	void clear(boolean swallowErrors);
 
 	/**
-	 * Gets a simple {@link RenderType} that is functionally identical to {@code baseLayer},
+	 * Gets a simple {@link RenderType} that is functionally identical to {@code base},
 	 * but with a different {@link net.minecraft.client.renderer.RenderStateShard.OutputStateShard} that binds this render target.
 	 *
-	 * @param baseLayer the layer to copy
+	 * @param base the layer to copy
 	 * @return a render layer using this render target
 	 * @see RenderTypeHelper#copy(RenderType, String, Consumer)
 	 */
-	RenderType getRenderLayer(RenderType baseLayer);
+	RenderType getRenderType(RenderType base);
 }

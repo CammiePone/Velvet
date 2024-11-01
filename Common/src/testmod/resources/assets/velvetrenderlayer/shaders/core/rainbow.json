@@ -4,8 +4,8 @@
     "srcrgb": "srcalpha",
     "dstrgb": "1-srcalpha"
   },
-  "vertex": "satinrenderlayer:rainbow",
-  "fragment": "satinrenderlayer:rainbow",
+  "vertex": "velvetrenderlayer:rainbow",
+  "fragment": "velvetrenderlayer:rainbow",
   "attributes": [
     "Position",
     "Color",

@@ -27,7 +27,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.ladysnake.satintestcore.common.item.SatinTestItems;
 
 public final class SatinCustomFormatTest implements ClientEntryPoint {
-    public static final String MOD_ID = "satincustomformattest";
+    public static final String MOD_ID = "velvetcustomformattest";
 
     private boolean renderingBlit = false;
     // this shader has the same overall effect as Minecraft's blit,

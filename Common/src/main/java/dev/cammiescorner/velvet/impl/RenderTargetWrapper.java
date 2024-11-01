@@ -103,7 +103,7 @@ public final class RenderTargetWrapper implements ManagedRenderTarget {
 	}
 
 	@Override
-	public RenderType getRenderLayer(RenderType type) {
-		return this.renderLayerSupplier.getRenderLayer(type);
+	public RenderType getRenderType(RenderType base) {
+		return this.renderLayerSupplier.getRenderLayer(base);
 	}
 }

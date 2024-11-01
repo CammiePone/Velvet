@@ -4,12 +4,12 @@
   ],
   "passes": [
     {
-      "name": "satindepthtest:rainbow_ping",
+      "name": "velvetbasictest:blit",
       "intarget": "minecraft:main",
       "outtarget": "swap"
     },
     {
-      "name": "blit",
+      "name": "velvetbasictest:blit",
       "intarget": "swap",
       "outtarget": "minecraft:main"
     }

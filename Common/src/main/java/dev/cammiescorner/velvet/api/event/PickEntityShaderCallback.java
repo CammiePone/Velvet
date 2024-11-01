@@ -19,6 +19,7 @@ package dev.cammiescorner.velvet.api.event;
 
 import dev.upcraft.sparkweave.api.event.Event;
 import dev.upcraft.sparkweave.event.EventFactoryImpl;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PostChain;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -28,7 +29,7 @@ import java.util.function.Supplier;
 
 public interface PickEntityShaderCallback {
 	/**
-	 * Fired in {@link net.minecraft.client.renderer.GameRenderer#checkEntityPostEffect(Entity)}
+	 * Fired in {@link GameRenderer#checkEntityPostEffect(Entity)}
 	 */
 	Event<PickEntityShaderCallback> EVENT = EventFactoryImpl.create(PickEntityShaderCallback.class,
 			(listeners) -> (entity, loadShaderFunc, appliedShaderGetter) -> {

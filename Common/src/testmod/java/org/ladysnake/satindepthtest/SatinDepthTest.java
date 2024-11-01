@@ -25,7 +25,7 @@ import org.ladysnake.satintestcore.event.EndClientTickEvent;
 import org.ladysnake.satintestcore.common.item.SatinTestItems;
 
 public class SatinDepthTest implements ClientEntryPoint {
-    public static final String MOD_ID = "satindepthtest";
+    public static final String MOD_ID = "velvetdepthtest";
 
 	@Override
 	public void onInitializeClient(ModContainer mod) {

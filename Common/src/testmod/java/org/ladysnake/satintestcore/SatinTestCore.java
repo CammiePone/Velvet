@@ -29,12 +29,13 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.ladysnake.satinrenderlayer.SatinRenderLayerTest;
 import org.ladysnake.satintestcore.common.block.SatinTestBlocks;
 import org.ladysnake.satintestcore.common.item.SatinTestItems;
 
 public class SatinTestCore implements MainEntryPoint {
-    public static final String MOD_ID = "satintestcore";
-	public static final RegistryHandler<EntityType<?>> ENTITY_TYPES = RegistryHandler.create(Registries.ENTITY_TYPE, "satinrenderlayer");
+    public static final String MOD_ID = "velvettestcore";
+	public static final RegistryHandler<EntityType<?>> ENTITY_TYPES = RegistryHandler.create(Registries.ENTITY_TYPE, SatinRenderLayerTest.MOD_ID);
 	RegistryService registryService = RegistryService.get();
 
 	public static final @NotNull RegistrySupplier<EntityType<IronGolem>> ILLUSION_GOLEM = SatinTestCore.ENTITY_TYPES.register("illusion_golem", () -> EntityType.Builder.of(IronGolem::new, MobCategory.CREATURE).sized(EntityType.IRON_GOLEM.getWidth(), EntityType.IRON_GOLEM.getHeight()).build(null));

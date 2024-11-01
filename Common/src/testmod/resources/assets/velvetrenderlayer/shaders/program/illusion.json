@@ -4,8 +4,8 @@
     "srcrgb": "srcalpha",
     "dstrgb": "1-srcalpha"
   },
-  "vertex": "satinrenderlayer:illusion",
-  "fragment": "satinrenderlayer:illusion",
+  "vertex": "velvetrenderlayer:illusion",
+  "fragment": "velvetrenderlayer:illusion",
   "attributes": ["Position"],
   "samplers": [{
     "name": "DiffuseSampler"

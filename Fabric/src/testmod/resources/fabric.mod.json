@@ -1,6 +1,6 @@
 {
 	"schemaVersion": 1,
-	"id": "satintestcore",
+	"id": "velvettestcore",
 	"version": "${version}",
 	"name": "${mod_display_name} TestMod",
 	"description": "Testmod for ${mod_display_name}",
@@ -15,8 +15,8 @@
 		]
 	},
 	"mixins": [
-		"satintestcore.mixins.json",
-		"satintestcore.fabric.mixins.json"
+		"velvettestcore.mixins.json",
+		"velvettestcore.fabric.mixins.json"
 	],
 	"depends": {
 		"velvet": "*",

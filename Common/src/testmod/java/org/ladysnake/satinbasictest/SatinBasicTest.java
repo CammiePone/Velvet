@@ -29,7 +29,7 @@ import org.apache.logging.log4j.Logger;
 import org.ladysnake.satintestcore.common.item.SatinTestItems;
 
 public final class SatinBasicTest implements ClientEntryPoint {
-    public static final String MOD_ID = "satinbasictest";
+    public static final String MOD_ID = "velvetbasictest";
 	private static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 	private boolean renderingBlit = false;
