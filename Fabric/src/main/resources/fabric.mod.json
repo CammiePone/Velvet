@@ -40,6 +40,14 @@
 				"sparkweave(required){curseforge:911456}{modrinth:nf68xfAw}",
 				"resourcefulconfig(required){curseforge:714059}{modrinth:M1953qlQ}"
 			]
+		},
+		"loom:injected_interfaces": {
+			"net/minecraft/class_280": [
+				"dev/cammiescorner/velvet/api/util/SamplerAccess"
+			],
+			"net/minecraft/class_5944": [
+				"dev/cammiescorner/velvet/api/util/SamplerAccess"
+			]
 		}
 	},
 	"depends": {

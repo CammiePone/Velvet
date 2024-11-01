@@ -1,6 +1,6 @@
 package dev.cammiescorner.velvet.neoforge;
 
-import dev.cammiescorner.velvet.api.util.Loader;
+import dev.cammiescorner.velvet.service.Loader;
 import net.neoforged.fml.loading.LoadingModList;
 
 public class LoaderImpl implements Loader {

@@ -15,10 +15,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; If not, see <https://www.gnu.org/licenses>.
  */
-/**
- * Implementation classes
- */
-@ApiStatus.Internal
-package dev.cammiescorner.velvet.mixin.client.gl;
+package dev.cammiescorner.velvet.api.util;
 
-import org.jetbrains.annotations.ApiStatus;
+import java.util.List;
+
+public interface SamplerAccess {
+
+	default void velvet$removeSampler(String name) {
+		throw new UnsupportedOperationException();
+	}
+
+	default boolean velvet$hasSampler(String name) {
+		throw new UnsupportedOperationException();
+	}
+
+	default List<String> velvet$getSamplerNames() {
+		throw new UnsupportedOperationException();
+	}
+
+	default List<Integer> velvet$getSamplerShaderLocs() {
+		throw new UnsupportedOperationException();
+	}
+}

@@ -20,49 +20,19 @@ package dev.cammiescorner.velvet.fabric.mixin.client;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.shaders.Program;
-import dev.cammiescorner.velvet.impl.SamplerAccess;
 import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceProvider;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
-
-import java.util.List;
-import java.util.Map;
-import java.util.function.IntSupplier;
 
 /**
  * Minecraft does not take into account domains when parsing a shader program.
  * These hooks redirect identifier instantiations to allow specifying a domain for shader files.
  */
 @Mixin(EffectInstance.class)
-public abstract class EffectInstanceMixin implements SamplerAccess {
-	@Shadow @Final private Map<String, IntSupplier> samplerMap;
+public abstract class EffectInstanceMixin {
 
-	@Override
-	public void removeSampler(String name) {
-		this.samplerMap.remove(name);
-	}
-
-	@Override
-	public boolean hasSampler(String name) {
-		return this.samplerMap.containsKey(name);
-	}
-
-	@Override
-	@Accessor("samplerNames")
-	public abstract List<String> getSamplerNames();
-
-	@Override
-	@Accessor("samplerLocations")
-	public abstract List<Integer> getSamplerShaderLocs();
-
-	/**
-	 * Fix identifier creation to allow different namespaces
-	 */
 	@WrapOperation(
 		method = "<init>",
 		at = @At(
@@ -72,7 +42,7 @@ public abstract class EffectInstanceMixin implements SamplerAccess {
 		)
 	)
 	ResourceLocation constructProgramIdentifier(String arg, Operation<ResourceLocation> original, ResourceProvider unused, String id) {
-		if(!id.contains(":"))
+		if(id.indexOf(ResourceLocation.NAMESPACE_SEPARATOR) == -1)
 			return original.call(arg);
 
 		ResourceLocation split = ResourceLocation.parse(id);
@@ -88,7 +58,7 @@ public abstract class EffectInstanceMixin implements SamplerAccess {
 		)
 	)
 	private static ResourceLocation constructProgramIdentifier(String arg, Operation<ResourceLocation> original, ResourceProvider unused, Program.Type shaderType, String id) {
-		if(!arg.contains(":"))
+		if(arg.indexOf(ResourceLocation.NAMESPACE_SEPARATOR) == -1)
 			return original.call(arg);
 
 		ResourceLocation split = ResourceLocation.parse(id);

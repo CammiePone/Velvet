@@ -14,17 +14,17 @@
 		"client.event.GameRendererMixin",
 		"client.event.LevelRendererMixin",
 		"client.event.MinecraftMixin",
-		"client.gl.CoreShaderMixin",
 		"client.gl.CustomFormatPostEffectProcessorMixin",
 		"client.gl.CustomFormatRenderTargetMixin",
 		"client.gl.DepthRenderTargetMixin",
+		"client.gl.EffectInstanceMixin",
+		"client.gl.ShaderInstanceMixin",
 		"client.gl.UniformMixin",
 		"client.render.CompositeStateAccessor",
 		"client.render.LevelRendererMixin",
 		"client.render.RenderStateShardAccessor",
 		"client.render.RenderTypeAccessor",
-		"client.render.RenderTypeCompositeRenderTypeMixin",
-		"client.render.CompositeStateAccessor"
+		"client.render.RenderTypeCompositeRenderTypeMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -15,43 +15,37 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; If not, see <https://www.gnu.org/licenses>.
  */
-package dev.cammiescorner.velvet.impl;
+package dev.cammiescorner.velvet.mixin.client.gl;
 
-import com.mojang.blaze3d.pipeline.RenderTarget;
 import dev.cammiescorner.velvet.api.util.SamplerAccess;
 import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.client.renderer.texture.AbstractTexture;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
-public final class ManagedSamplerUniformV1 extends ManagedSamplerUniformBase {
-	public ManagedSamplerUniformV1(String name) {
-		super(name);
+import java.util.List;
+import java.util.Map;
+
+@Mixin(ShaderInstance.class)
+public abstract class ShaderInstanceMixin implements SamplerAccess {
+	@Shadow @Final private Map<String, Object> samplerMap;
+
+	@Override
+	public void velvet$removeSampler(String name) {
+		this.samplerMap.remove(name);
 	}
 
 	@Override
-	public void set(AbstractTexture texture) {
-		this.set((Object) texture);
+	public boolean velvet$hasSampler(String name) {
+		return this.samplerMap.containsKey(name);
 	}
 
 	@Override
-	public void set(RenderTarget textureFbo) {
-		this.set((Object) textureFbo);
-	}
+	@Accessor("samplerNames")
+	public abstract List<String> velvet$getSamplerNames();
 
 	@Override
-	public void set(int textureName) {
-		this.set((Object) textureName);
-	}
-
-	@Override
-	protected void set(Object value) {
-		SamplerAccess[] targets = this.targets;
-		if(targets.length > 0 && this.cachedValue != value) {
-			for(SamplerAccess target : targets) {
-				if (target instanceof ShaderInstance shaderInstance) {
-					shaderInstance.setSampler(this.name, value);
-				}
-			}
-			this.cachedValue = value;
-		}
-	}
+	@Accessor("samplerLocations")
+	public abstract List<Integer> velvet$getSamplerShaderLocs();
 }

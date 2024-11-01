@@ -2,7 +2,7 @@ package dev.cammiescorner.velvet;
 
 import dev.cammiescorner.velvet.api.event.ResolutionChangeCallback;
 import dev.cammiescorner.velvet.api.event.WorldRendererReloadCallback;
-import dev.cammiescorner.velvet.api.util.Loader;
+import dev.cammiescorner.velvet.service.Loader;
 import dev.cammiescorner.velvet.impl.ReloadableShaderEffectManager;
 import dev.upcraft.sparkweave.api.entrypoint.ClientEntryPoint;
 import dev.upcraft.sparkweave.api.platform.ModContainer;

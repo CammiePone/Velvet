@@ -1,4 +1,4 @@
-package dev.cammiescorner.velvet.neoforge.mixin;
+package dev.cammiescorner.velvet.neoforge.mixin.blockrendertype;
 
 import dev.cammiescorner.velvet.impl.BlockRenderTypeRegistry;
 import dev.cammiescorner.velvet.neoforge.impl.NeoRenderType;

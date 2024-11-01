@@ -24,7 +24,7 @@ public class ShaderInstanceMixin {
 
 	@WrapOperation(method = "getOrCreate", at = @At(value = "INVOKE", target = "Lnet/minecraft/resources/ResourceLocation;withDefaultNamespace(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;"), allow = 1)
 	private static ResourceLocation allowNoneMinecraftId(String id, Operation<ResourceLocation> original) {
-		if(id.contains(String.valueOf(ResourceLocation.NAMESPACE_SEPARATOR)))
+		if(id.indexOf(ResourceLocation.NAMESPACE_SEPARATOR) != -1)
 			return ResourceLocation.parse(id);
 
 		return original.call(id);

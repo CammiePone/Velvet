@@ -19,6 +19,7 @@ package dev.cammiescorner.velvet.impl;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import dev.cammiescorner.velvet.api.managed.uniform.SamplerUniformV2;
+import dev.cammiescorner.velvet.api.util.SamplerAccess;
 import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 
@@ -54,7 +55,9 @@ public final class ManagedSamplerUniformV2 extends ManagedSamplerUniformBase imp
 		SamplerAccess[] targets = this.targets;
 		if(targets.length > 0 && this.cachedValue != value) {
 			for(SamplerAccess target : targets) {
-				((EffectInstance) target).setSampler(this.name, value);
+				if(target instanceof EffectInstance effectInstance) {
+					effectInstance.setSampler(this.name, value);
+				}
 			}
 			this.cachedValue = value;
 		}

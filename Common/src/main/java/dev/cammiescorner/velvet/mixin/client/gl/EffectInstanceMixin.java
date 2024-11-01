@@ -17,8 +17,8 @@
  */
 package dev.cammiescorner.velvet.mixin.client.gl;
 
-import dev.cammiescorner.velvet.impl.SamplerAccess;
-import net.minecraft.client.renderer.ShaderInstance;
+import dev.cammiescorner.velvet.api.util.SamplerAccess;
+import net.minecraft.client.renderer.EffectInstance;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,26 +26,27 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.IntSupplier;
 
-@Mixin(ShaderInstance.class)
-public abstract class CoreShaderMixin implements SamplerAccess {
-	@Shadow @Final private Map<String, Object> samplerMap;
+@Mixin(EffectInstance.class)
+public abstract class EffectInstanceMixin implements SamplerAccess {
+	@Shadow @Final private Map<String, IntSupplier> samplerMap;
 
 	@Override
-	public void removeSampler(String name) {
+	public void velvet$removeSampler(String name) {
 		this.samplerMap.remove(name);
 	}
 
 	@Override
-	public boolean hasSampler(String name) {
+	public boolean velvet$hasSampler(String name) {
 		return this.samplerMap.containsKey(name);
 	}
 
 	@Override
 	@Accessor("samplerNames")
-	public abstract List<String> getSamplerNames();
+	public abstract List<String> velvet$getSamplerNames();
 
 	@Override
 	@Accessor("samplerLocations")
-	public abstract List<Integer> getSamplerShaderLocs();
+	public abstract List<Integer> velvet$getSamplerShaderLocs();
 }

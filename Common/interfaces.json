@@ -1,2 +1,8 @@
 {
+	"net/minecraft/client/renderer/EffectInstance": [
+		"dev/cammiescorner/velvet/api/util/SamplerAccess"
+	],
+	"net/minecraft/client/renderer/ShaderInstance": [
+		"dev/cammiescorner/velvet/api/util/SamplerAccess"
+	]
 }

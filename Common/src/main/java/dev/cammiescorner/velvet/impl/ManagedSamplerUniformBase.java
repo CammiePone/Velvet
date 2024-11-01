@@ -19,6 +19,7 @@ package dev.cammiescorner.velvet.impl;
 
 import com.mojang.blaze3d.shaders.Uniform;
 import dev.cammiescorner.velvet.api.managed.uniform.SamplerUniform;
+import dev.cammiescorner.velvet.api.util.SamplerAccess;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.client.renderer.EffectInstance;
@@ -52,31 +53,26 @@ public abstract class ManagedSamplerUniformBase extends ManagedUniformBase imple
 		IntList rawTargets = new IntArrayList(shaders.size());
 		for(PostPass shader : shaders) {
 			EffectInstance program = shader.getEffect();
-			SamplerAccess access = (SamplerAccess) program;
-			if(access.hasSampler(this.name)) {
-				targets.add(access);
-				rawTargets.add(getSamplerLoc(access));
+			if(program.velvet$hasSampler(this.name)) {
+				targets.add(program);
+				rawTargets.add(getSamplerLoc(program));
 			}
 		}
-		this.targets = targets.toArray(new SamplerAccess[0]);
-		this.locations = rawTargets.toArray(new int[0]);
+		this.targets = targets.toArray(SamplerAccess[]::new);
+		this.locations = rawTargets.toIntArray();
 		this.syncCurrentValues();
 		return this.targets.length > 0;
 	}
 
 	private int getSamplerLoc(SamplerAccess access) {
-		return access.getSamplerShaderLocs().get(access.getSamplerNames().indexOf(this.name));
+		return access.velvet$getSamplerShaderLocs().get(access.velvet$getSamplerNames().indexOf(this.name));
 	}
 
 	@Override
 	public boolean findUniformTarget(ShaderInstance shader) {
-		return findUniformTarget(((SamplerAccess) shader));
-	}
-
-	private boolean findUniformTarget(SamplerAccess access) {
-		if(access.hasSampler(this.name)) {
-			this.targets = new SamplerAccess[]{access};
-			this.locations = new int[]{getSamplerLoc(access)};
+		if(shader.velvet$hasSampler(this.name)) {
+			this.targets = new SamplerAccess[]{shader};
+			this.locations = new int[]{getSamplerLoc(shader)};
 			this.syncCurrentValues();
 			return true;
 		}
@@ -97,7 +93,7 @@ public abstract class ManagedSamplerUniformBase extends ManagedUniformBase imple
 	public void setDirect(int activeTexture) {
 		int length = this.locations.length;
 		for(int i = 0; i < length; i++) {
-			this.targets[i].removeSampler(this.name);
+			this.targets[i].velvet$removeSampler(this.name);
 			Uniform.uploadInteger(this.locations[i], activeTexture);
 		}
 	}

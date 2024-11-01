@@ -1,6 +1,6 @@
 package dev.cammiescorner.velvet.fabric;
 
-import dev.cammiescorner.velvet.api.util.Loader;
+import dev.cammiescorner.velvet.service.Loader;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class LoaderImpl implements Loader {

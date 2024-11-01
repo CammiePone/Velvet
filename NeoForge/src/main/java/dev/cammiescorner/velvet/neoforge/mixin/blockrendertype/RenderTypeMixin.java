@@ -1,4 +1,4 @@
-package dev.cammiescorner.velvet.neoforge.mixin;
+package dev.cammiescorner.velvet.neoforge.mixin.blockrendertype;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
