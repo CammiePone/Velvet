@@ -15,8 +15,8 @@ assignees: ''
 
 **Environment:**
 
-- Minecraft Version [e.g. 1.14.1]
-- Satin Version [e.g. 1.0.0]
+- Minecraft Version [e.g. 1.21.1]
+- Velvet Version [e.g. 0.1.0]
 - Inside or Outside of a development environment ?
 
 **Screenshots (optional)**
