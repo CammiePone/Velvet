@@ -29,17 +29,18 @@ import dev.cammiescorner.velvet.api.managed.uniform.Uniform1f;
 import dev.cammiescorner.velvet.api.util.RenderTypeHelper;
 import dev.upcraft.sparkweave.api.client.event.RegisterEntityRenderersEvent;
 import dev.upcraft.sparkweave.api.entrypoint.ClientEntryPoint;
+import dev.upcraft.sparkweave.api.logging.SparkweaveLoggerFactory;
 import dev.upcraft.sparkweave.api.platform.ModContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import org.ladysnake.satintestcore.SatinTestCore;
-import org.ladysnake.satintestcore.common.block.SatinTestBlocks;
-import org.ladysnake.satintestcore.event.BlockRenderLayerMap;
+import org.apache.logging.log4j.Logger;
 import org.ladysnake.satintestcore.event.EndClientTickEvent;
+import org.ladysnake.satintestcore.init.SatinTestEntities;
 
 public final class SatinRenderLayerTest implements ClientEntryPoint {
 	public static final String MOD_ID = "velvetrenderlayer";
+	private static final Logger LOGGER = SparkweaveLoggerFactory.getLogger();
     /* * * * ManagedShaderEffect-based RenderLayer entity rendering * * * */
     public static final ManagedShaderEffect illusionEffect = ShaderEffectManager.getInstance().manage(ResourceLocation.fromNamespaceAndPath(MOD_ID, "shaders/post/illusion.json"),
             effect -> effect.setUniformValue("ColorModulate", 1.2f, 0.7f, 0.2f, 1.0f));
@@ -53,13 +54,19 @@ public final class SatinRenderLayerTest implements ClientEntryPoint {
 
 	@Override
 	public void onInitializeClient(ModContainer mod) {
+		LOGGER.info("Loading SatinRenderLayerTest");
+
 		RenderType blockRenderType = illusionBuffer.getRenderType(RenderType.translucent());
 		RenderTypeHelper.registerBlockRenderType(blockRenderType);
-		BlockRenderLayerMap.INSTANCE.putBlock(SatinTestBlocks.DEBUG_BLOCK, blockRenderType);
+
+		// TODO move to sparkweave event
+//		BlockRenderLayerMap.INSTANCE.putBlock(SatinTestBlocks.DEBUG_BLOCK.get(), blockRenderType);
+
 		RegisterEntityRenderersEvent.EVENT.register(event -> {
-			event.registerRenderer(SatinTestCore.ILLUSION_GOLEM, IllusionGolemEntityRenderer::new);
-			event.registerRenderer(SatinTestCore.RAINBOW_WITHER, RainbowWitherEntityRenderer::new);
+			event.registerRenderer(SatinTestEntities.ILLUSION_GOLEM, IllusionGolemEntityRenderer::new);
+			event.registerRenderer(SatinTestEntities.RAINBOW_WITHER, RainbowWitherEntityRenderer::new);
 		});
+
 		EndClientTickEvent.EVENT.register(client -> ticks++);
 		EntitiesPreRenderCallback.EVENT.register((camera, frustum, tickDelta) -> uniformSTime.set((ticks + tickDelta) * 0.05f));
 		ShaderEffectRenderCallback.EVENT.register(tickDelta -> {

@@ -20,22 +20,32 @@ package org.ladysnake.satindepthtest;
 import dev.cammiescorner.velvet.api.event.PostWorldRenderCallbackV2;
 import dev.cammiescorner.velvet.api.event.ShaderEffectRenderCallback;
 import dev.upcraft.sparkweave.api.entrypoint.ClientEntryPoint;
+import dev.upcraft.sparkweave.api.logging.SparkweaveLoggerFactory;
 import dev.upcraft.sparkweave.api.platform.ModContainer;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.world.InteractionHand;
+import org.apache.logging.log4j.Logger;
+import org.ladysnake.satintestcore.common.debugbehavior.DebugBehavior;
 import org.ladysnake.satintestcore.event.EndClientTickEvent;
-import org.ladysnake.satintestcore.common.item.SatinTestItems;
 
 public class SatinDepthTest implements ClientEntryPoint {
     public static final String MOD_ID = "velvetdepthtest";
+	private static final Logger LOGGER = SparkweaveLoggerFactory.getLogger();
 
 	@Override
 	public void onInitializeClient(ModContainer mod) {
+		LOGGER.info("Loading SatinDepthTest");
 		EndClientTickEvent.EVENT.register(DepthFx.INSTANCE);
 		ShaderEffectRenderCallback.EVENT.register(DepthFx.INSTANCE);
 		PostWorldRenderCallbackV2.EVENT.register(DepthFx.INSTANCE);
-		SatinTestItems.DEBUG_ITEM.registerDebugMode(MOD_ID, (world, player, hand) -> {
-			if(world.isClientSide()) {
-				DepthFx.INSTANCE.testShader.release();
-			}
-		});
+	}
+
+	public static class DepthTestDebugBehavior extends DebugBehavior.Client {
+
+		@Override
+		public void clientAction(ClientLevel level, AbstractClientPlayer player, InteractionHand hand) {
+			DepthFx.INSTANCE.testShader.release();
+		}
 	}
 }

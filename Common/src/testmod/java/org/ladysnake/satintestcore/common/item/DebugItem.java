@@ -17,6 +17,7 @@
  */
 package org.ladysnake.satintestcore.common.item;
 
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -25,31 +26,39 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.ladysnake.satintestcore.common.debugbehavior.DebugBehavior;
+import org.ladysnake.satintestcore.init.SatinTestDataComponents;
+import org.ladysnake.satintestcore.init.SatinTestDebugBehaviors;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class DebugItem extends Item {
-    private int debugMode;
-    private final List<DebugMode> debugModes = new ArrayList<>();
 
     public DebugItem(Item.Properties settings) {
-        super(settings);
+        super(settings.component(SatinTestDataComponents.DEBUG_BEHAVIOR.get(), SatinTestDebugBehaviors.BASIC.holder()));
     }
 
-    public void registerDebugMode(String name, DebugCallback callback) {
-        this.debugModes.add(new DebugMode(name, callback));
-    }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+	    ItemStack stack = player.getItemInHand(hand);
+	    Holder<DebugBehavior> currentDebugBehavior = stack.get(SatinTestDataComponents.DEBUG_BEHAVIOR.get());
         if (player.isCrouching() && !world.isClientSide()) {
-            if (this.debugModes.size() > 1) {
-                debugMode = (debugMode + 1) % this.debugModes.size();
-                player.displayClientMessage(Component.translatable("Switched mode to %s", this.debugModes.get(debugMode).name()), true);
+            if (SatinTestDebugBehaviors.DEBUG_BEHAVIORS_REGISTRY.size() > 1) {
+
+				List<Holder<DebugBehavior>> all = SatinTestDebugBehaviors.DEBUG_BEHAVIORS_REGISTRY.asLookup().listElements().sorted(Comparator.comparing(it -> it.key().location())).map(it -> (Holder<DebugBehavior>) it).toList();
+				int currentIndex = all.indexOf(currentDebugBehavior);
+				int newIndex = (currentIndex + 1) % all.size();
+
+				Holder<DebugBehavior> newDebugBehavior = all.get(newIndex);
+				stack.set(SatinTestDataComponents.DEBUG_BEHAVIOR.get(), newDebugBehavior);
+
+                player.displayClientMessage(Component.translatable("message.velvettestcore.debug_behavior_switched", newDebugBehavior.value().getName()), true);
             }
         } else if (!player.isCrouching()) {
-            this.debugModes.get(debugMode).callback().use(world, player, hand);
+	        //noinspection DataFlowIssue
+	        currentDebugBehavior.value().call(world, player, hand);
         }
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
     }

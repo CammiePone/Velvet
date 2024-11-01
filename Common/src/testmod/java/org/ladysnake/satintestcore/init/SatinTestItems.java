@@ -15,20 +15,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; If not, see <https://www.gnu.org/licenses>.
  */
-package org.ladysnake.satintestcore.common.block;
+package org.ladysnake.satintestcore.init;
 
+import dev.upcraft.sparkweave.api.registry.RegistryHandler;
+import dev.upcraft.sparkweave.api.registry.RegistrySupplier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.Item;
 import org.ladysnake.satintestcore.SatinTestCore;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import org.ladysnake.satintestcore.common.item.DebugItem;
 
-public class SatinTestBlocks {
-    public static final Block DEBUG_BLOCK = new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK));
-    
-    public static void init() {
-        Registry.register(BuiltInRegistries.BLOCK, ResourceLocation.fromNamespaceAndPath(SatinTestCore.MOD_ID, "debug_block"), DEBUG_BLOCK);
-    }
+public class SatinTestItems {
+
+	public static final RegistryHandler<Item> ITEMS = RegistryHandler.create(Registries.ITEM, SatinTestCore.MOD_ID);
+
+    public static final RegistrySupplier<DebugItem> DEBUG_ITEM = ITEMS.register("debug_item", () -> new DebugItem(new Item.Properties()));
 }

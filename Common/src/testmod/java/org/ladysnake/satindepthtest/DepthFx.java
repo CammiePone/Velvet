@@ -32,19 +32,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.ladysnake.satintestcore.event.EndClientTickEvent;
 
 public class DepthFx implements PostWorldRenderCallbackV2, ShaderEffectRenderCallback, EndClientTickEvent {
     public static final ResourceLocation FANCY_NIGHT_SHADER_ID = ResourceLocation.fromNamespaceAndPath(SatinDepthTest.MOD_ID, "shaders/post/rainbow_ping.json");
     public static final DepthFx INSTANCE = new DepthFx();
-    private final Minecraft mc = Minecraft.getInstance();
 
     final ManagedShaderEffect testShader = ShaderEffectManager.getInstance().manage(FANCY_NIGHT_SHADER_ID, shader -> {
+	    Minecraft mc = Minecraft.getInstance();
         shader.setSamplerUniform("DepthSampler", ((ReadableDepthRenderTarget)mc.getMainRenderTarget()).getStillDepthMap());
         shader.setUniformValue("ViewPort", 0, 0, mc.getWindow().getWidth(), mc.getWindow().getHeight());
     });
@@ -57,10 +55,10 @@ public class DepthFx implements PostWorldRenderCallbackV2, ShaderEffectRenderCal
     private final Matrix4f projectionMatrix = new Matrix4f();
     private int ticks;
 
-    private boolean isWorldNight(@Nullable Player player) {
-        if (player != null) {
-            Level world = player.level();
-            float celestialAngle = world.getTimeOfDay(1.0f);
+    private boolean isNight() {
+		Level level = Minecraft.getInstance().level;
+        if (level != null) {
+            float celestialAngle = level.getTimeOfDay(1.0f);
             return 0.23f < celestialAngle && celestialAngle < 0.76f;
         }
         return false;
@@ -75,7 +73,7 @@ public class DepthFx implements PostWorldRenderCallbackV2, ShaderEffectRenderCal
 
     @Override
     public void onWorldRendered(PoseStack matrices, Camera camera, float tickDelta) {
-        if (isWorldNight(mc.player)) {
+        if (isNight()) {
             uniformSTime.set((ticks + tickDelta) / 20f);
             uniformInverseTransformMatrix.set(GlMatrices.getInverseTransformMatrix(projectionMatrix));
             Vec3 cameraPos = camera.getPosition();

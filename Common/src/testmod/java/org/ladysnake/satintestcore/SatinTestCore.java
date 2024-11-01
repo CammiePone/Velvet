@@ -18,37 +18,29 @@
 package org.ladysnake.satintestcore;
 
 import dev.upcraft.sparkweave.api.entrypoint.MainEntryPoint;
+import dev.upcraft.sparkweave.api.logging.SparkweaveLoggerFactory;
 import dev.upcraft.sparkweave.api.platform.ModContainer;
 import dev.upcraft.sparkweave.api.platform.services.RegistryService;
-import dev.upcraft.sparkweave.api.registry.RegistryHandler;
-import dev.upcraft.sparkweave.api.registry.RegistrySupplier;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
-import org.ladysnake.satinrenderlayer.SatinRenderLayerTest;
-import org.ladysnake.satintestcore.common.block.SatinTestBlocks;
-import org.ladysnake.satintestcore.common.item.SatinTestItems;
+import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.Logger;
+import org.ladysnake.satintestcore.init.*;
 
 public class SatinTestCore implements MainEntryPoint {
     public static final String MOD_ID = "velvettestcore";
-	public static final RegistryHandler<EntityType<?>> ENTITY_TYPES = RegistryHandler.create(Registries.ENTITY_TYPE, SatinRenderLayerTest.MOD_ID);
-	RegistryService registryService = RegistryService.get();
+	private static final Logger LOGGER = SparkweaveLoggerFactory.getLogger();
 
-	public static final @NotNull RegistrySupplier<EntityType<IronGolem>> ILLUSION_GOLEM = SatinTestCore.ENTITY_TYPES.register("illusion_golem", () -> EntityType.Builder.of(IronGolem::new, MobCategory.CREATURE).sized(EntityType.IRON_GOLEM.getWidth(), EntityType.IRON_GOLEM.getHeight()).build(null));
-	public static final @NotNull RegistrySupplier<EntityType<WitherBoss>> RAINBOW_WITHER = SatinTestCore.ENTITY_TYPES.register("rainbow_wither", () -> EntityType.Builder.of((EntityType<WitherBoss> entityType, Level level) -> {
-		WitherBoss witherBoss = new WitherBoss(entityType, level);
-		witherBoss.setNoAi(true);
-		return witherBoss;
-	}, MobCategory.MONSTER).sized(EntityType.WITHER.getWidth(), EntityType.WITHER.getHeight()).build(null));
+	public static ResourceLocation id(String path) {
+		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+	}
 
 	@Override
 	public void onInitialize(ModContainer mod) {
-		SatinTestBlocks.init();
-		SatinTestItems.init();
-		ENTITY_TYPES.accept(registryService);
+		LOGGER.info("Loading SatinTestCore");
+		RegistryService registryService = RegistryService.get();
+		SatinTestDebugBehaviors.DEBUG_BEHAVIORS.accept(registryService);
+		SatinTestDataComponents.DATA_COMPONENTS.accept(registryService);
+		SatinTestBlocks.BLOCKS.accept(registryService);
+		SatinTestItems.ITEMS.accept(registryService);
+		SatinTestEntities.ENTITY_TYPES.accept(registryService);
 	}
 }

@@ -8,7 +8,6 @@
 		"DefaultAttributesMixin"
 	],
 	"client": [
-		"client.ItemBlockRenderTypesMixin",
 		"client.MinecraftMixin"
 	],
 	"injectors": {

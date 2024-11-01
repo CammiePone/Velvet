@@ -1,0 +1,4 @@
+{
+	"parent": "minecraft:block/cobblestone",
+	"render_type": "velvetrenderlayer:illusion"
+}

@@ -1,3 +1,3 @@
 {
-  "parent": "minecraft:block/cobblestone"
+  "parent": "velvettestcore:block/debug_block"
 }

@@ -22,34 +22,41 @@ import dev.cammiescorner.velvet.api.managed.ManagedShaderEffect;
 import dev.cammiescorner.velvet.api.managed.ShaderEffectManager;
 import dev.cammiescorner.velvet.api.managed.uniform.Uniform4f;
 import dev.upcraft.sparkweave.api.entrypoint.ClientEntryPoint;
+import dev.upcraft.sparkweave.api.logging.SparkweaveLoggerFactory;
 import dev.upcraft.sparkweave.api.platform.ModContainer;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
-import org.apache.logging.log4j.LogManager;
+import net.minecraft.world.InteractionHand;
 import org.apache.logging.log4j.Logger;
-import org.ladysnake.satintestcore.common.item.SatinTestItems;
+import org.ladysnake.satintestcore.common.debugbehavior.DebugBehavior;
 
 public final class SatinBasicTest implements ClientEntryPoint {
     public static final String MOD_ID = "velvetbasictest";
-	private static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+	private static final Logger LOGGER = SparkweaveLoggerFactory.getLogger();
 
-	private boolean renderingBlit = false;
+	private static boolean renderingBlit = false;
 	// literally the same as minecraft's blit, we are just checking that custom paths work
-	private final ManagedShaderEffect testShader = ShaderEffectManager.getInstance().manage(ResourceLocation.fromNamespaceAndPath(MOD_ID, "shaders/post/blit.json"), (effect) -> {
+	private static final ManagedShaderEffect testShader = ShaderEffectManager.getInstance().manage(ResourceLocation.fromNamespaceAndPath(MOD_ID, "shaders/post/blit.json"), (effect) -> {
 		LOGGER.info("Test shader got updated");
 	});
-	private final Uniform4f color = testShader.findUniform4f("ColorModulate");
+	private static final Uniform4f color = testShader.findUniform4f("ColorModulate");
+
+	public static class BasicTestDebugBehavior extends DebugBehavior.Client {
+
+		@Override
+		public void clientAction(ClientLevel level, AbstractClientPlayer player, InteractionHand hand) {
+			renderingBlit = !renderingBlit;
+			color.set((float) Math.random(), (float) Math.random(), (float) Math.random(), 1.0f);
+		}
+	}
 
 	@Override
 	public void onInitializeClient(ModContainer mod) {
+		LOGGER.info("Loading SatinBasicTest");
 		ShaderEffectRenderCallback.EVENT.register(tickDelta -> {
 			if (renderingBlit) {
 				testShader.render(tickDelta);
-			}
-		});
-		SatinTestItems.DEBUG_ITEM.registerDebugMode(MOD_ID, (world, player, hand) -> {
-			if (world.isClientSide()) {
-				renderingBlit = !renderingBlit;
-				color.set((float) Math.random(), (float) Math.random(), (float) Math.random(), 1.0f);
 			}
 		});
 	}

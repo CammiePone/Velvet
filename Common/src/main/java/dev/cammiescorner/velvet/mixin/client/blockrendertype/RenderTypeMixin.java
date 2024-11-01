@@ -18,30 +18,40 @@
 package dev.cammiescorner.velvet.mixin.client.blockrendertype;
 
 import com.google.common.collect.ImmutableList;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import dev.cammiescorner.velvet.impl.BlockRenderTypeRegistry;
+import dev.cammiescorner.velvet.impl.RenderTypeUtil;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
-import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
 
 @Mixin(RenderType.class)
 public abstract class RenderTypeMixin extends RenderStateShard {
-	private RenderTypeMixin() {
-		super(null, null, null);
+
+	private RenderTypeMixin(String name, Runnable setupState, Runnable clearState) {
+		super(name, setupState, clearState);
+		throw new UnsupportedOperationException();
 	}
 
-	@Inject(
-		method = "chunkBufferLayers",
-		at = @At("RETURN"),
-		cancellable = true
-	)
-	private static void getBlockLayers(CallbackInfoReturnable<ImmutableList<Object>> info) {
-		info.setReturnValue(
-				ImmutableList.builder()
-						.addAll(info.getReturnValue())
-						.addAll(BlockRenderTypeRegistry.INSTANCE.getTypes()
-						).build());
+	@Mutable
+	@Final
+	@Shadow
+	private static ImmutableList<RenderType> CHUNK_BUFFER_LAYERS;
+
+	@Unique
+	private static boolean velvet$chunkBuffersInitialized = false;
+
+	@ModifyReturnValue(method = "chunkBufferLayers", at = @At("RETURN"))
+	private static List<RenderType> getBlockLayers(List<RenderType> original) {
+		if (!velvet$chunkBuffersInitialized && RenderTypeUtil.freezeRegistryHack) {
+			CHUNK_BUFFER_LAYERS = ImmutableList.<RenderType>builder().addAll(CHUNK_BUFFER_LAYERS).addAll(BlockRenderTypeRegistry.INSTANCE.getTypes()).build();
+			velvet$chunkBuffersInitialized = true;
+			return ImmutableList.<RenderType>builder().addAll(original).addAll(BlockRenderTypeRegistry.INSTANCE.getTypes()).build();
+		}
+
+		return original;
 	}
 }

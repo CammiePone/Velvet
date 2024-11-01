@@ -1,13 +1,13 @@
 package org.ladysnake.satintestcore.mixin;
 
 import com.google.common.collect.ImmutableMap;
-import org.ladysnake.satintestcore.SatinTestCore;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
+import org.ladysnake.satintestcore.init.SatinTestEntities;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -26,8 +26,8 @@ public class DefaultAttributesMixin {
 	private static void gimmePhantomAttributesDamnIt(CallbackInfo info) {
 		SUPPLIERS = new ImmutableMap.Builder<EntityType<? extends LivingEntity>, AttributeSupplier>()
 			.putAll(SUPPLIERS)
-			.put(SatinTestCore.ILLUSION_GOLEM.get(), IronGolem.createAttributes().build())
-			.put(SatinTestCore.RAINBOW_WITHER.get(), WitherBoss.createAttributes().build())
+			.put(SatinTestEntities.ILLUSION_GOLEM.get(), IronGolem.createAttributes().build())
+			.put(SatinTestEntities.RAINBOW_WITHER.get(), WitherBoss.createAttributes().build())
 			.build();
 	}
 }
