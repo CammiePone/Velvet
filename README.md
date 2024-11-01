@@ -58,11 +58,15 @@ dependencies {
 }
 ```
 
-Then add the library version to your `gradle.properties` or your `libs.versions.toml` file, depending on how your workspace is set up:
-
+Then add the library version to your `gradle.properties` file:
 ```properties
-# Velvet library
+# Velvet version
 velvet_version=0.x.x
+```
+Or your `libs.versions.toml` file if you're using one of those instead:
+```toml
+# Velvet version
+velvet_version = "0.x.x"
 ```
 
 For the latest version of Velvet, please check the [GitHub Releases](https://github.com/CammiePone/Velvet/releases).
