@@ -75,6 +75,12 @@ For the latest version of Velvet, please check the [GitHub Releases](https://git
 
 ---
 
+## Pull Requests
+
+Unless it's to fix a bug exclusive to Velvet, you will need to get your PR changes merged into Satin in order to be merged into Velvet. I want to keep parity with Satin, as it simplifies a lot of things between the two mods.
+
+---
+
 <p align="center">
 	<a href="https://cammiescorner.dev/discord"><img src="https://cammiescorner.dev/images/extras/discord.png" width="150" height="150" title="Join my Discord" alt="The Discord icon, which is a blue circle with half in shadow. In the middle is a weird little robot-helmet-looking-thingy."></a>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
