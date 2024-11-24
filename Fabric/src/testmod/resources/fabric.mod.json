@@ -12,6 +12,9 @@
 	"entrypoints": {
 		"main": [
 			"org.ladysnake.satintestcore.fabric.entrypoints.Main"
+		],
+		"client": [
+			"org.ladysnake.satintestcore.fabric.entrypoints.Client"
 		]
 	},
 	"mixins": [

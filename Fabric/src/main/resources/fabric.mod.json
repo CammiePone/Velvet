@@ -19,7 +19,6 @@
 	"icon": "icon.png",
 	"entrypoints": {
 		"client": [
-			"dev.cammiescorner.velvet.fabric.entrypoints.Client"
 		]
 	},
 	"custom": {
