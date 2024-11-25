@@ -78,9 +78,9 @@ public final class RenderTargetWrapper implements ManagedRenderTarget {
 	}
 
 	@Override
-	public void draw() {
+	public void draw(boolean disableBlend) {
 		Window window = Minecraft.getInstance().getWindow();
-		this.draw(window.getWidth(), window.getHeight(), true);
+		this.draw(window.getWidth(), window.getHeight(), disableBlend);
 	}
 
 	@Override
