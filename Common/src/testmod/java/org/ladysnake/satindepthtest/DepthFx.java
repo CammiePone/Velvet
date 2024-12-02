@@ -43,7 +43,7 @@ public class DepthFx implements PostLevelRenderCallback, ShaderEffectRenderCallb
 
     final ManagedShaderEffect testShader = ShaderEffectManager.getInstance().manage(FANCY_NIGHT_SHADER_ID, shader -> {
 	    Minecraft mc = Minecraft.getInstance();
-        shader.setSamplerUniform("DepthSampler", ((ReadableDepthRenderTarget)mc.getMainRenderTarget()).getStillDepthMap());
+        shader.setSamplerUniform("DepthSampler", ReadableDepthRenderTarget.getFrom(mc.getMainRenderTarget()).getStillDepthMap());
         shader.setUniformValue("ViewPort", 0, 0, mc.getWindow().getWidth(), mc.getWindow().getHeight());
     });
     private final Uniform1f uniformSTime = testShader.findUniform1f("STime");

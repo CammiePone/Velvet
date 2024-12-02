@@ -78,7 +78,7 @@ public abstract class LevelRendererMixin {
 		}
 	)
 	private void hookPostLevelRender(DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f frustumMatrix, Matrix4f projectionMatrix, CallbackInfo ci, @Local PoseStack matrices) {
-		((ReadableDepthRenderTarget) Minecraft.getInstance().getMainRenderTarget()).freezeDepthMap();
+		ReadableDepthRenderTarget.getFrom(Minecraft.getInstance().getMainRenderTarget()).freezeDepthMap();
 		PostLevelRenderCallback.EVENT.invoker().onLevelRendered(matrices, frustumMatrix, projectionMatrix, camera, deltaTracker.getGameTimeDeltaPartialTick(true));
 	}
 }
