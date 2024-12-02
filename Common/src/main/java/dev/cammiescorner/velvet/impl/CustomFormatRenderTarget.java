@@ -60,7 +60,7 @@ public class CustomFormatRenderTarget {
 	 * @param formatString the pixel format, as specified by {@link TextureFormat#decode(String)}
 	 */
 	public static void prepareCustomFormat(String formatString) {
-		// FORMAT's value is then consumed in gl.FramebufferMixin
+		// FORMAT's value is then consumed in CustomFormatRenderTargetMixin
 		FORMAT.set(TextureFormat.decode(formatString));
 	}
 

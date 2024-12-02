@@ -66,4 +66,8 @@ public interface ReadableDepthRenderTarget {
 	 */
 	@API(status = EXPERIMENTAL)
 	void freezeDepthMap();
+
+	static ReadableDepthRenderTarget getFrom(RenderTarget target) {
+		return (ReadableDepthRenderTarget) target;
+	}
 }

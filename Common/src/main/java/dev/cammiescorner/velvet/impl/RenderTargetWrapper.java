@@ -48,7 +48,7 @@ public final class RenderTargetWrapper implements ManagedRenderTarget {
 			this.wrapped = shaderEffect.getTempTarget(this.name);
 
 			if(this.wrapped == null)
-				Velvet.LOGGER.warn("No target framebuffer found with name {} in shader {}", this.name, shaderEffect.getName());
+				Velvet.LOGGER.warn("No target RenderTarget found with name {} in shader {}", this.name, shaderEffect.getName());
 		}
 	}
 

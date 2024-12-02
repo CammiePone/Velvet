@@ -36,8 +36,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(RenderTarget.class)
 public abstract class CustomFormatRenderTargetMixin {
-	@Unique
-	private int format = GlConst.GL_RGBA8;
+	@Unique private int format = GlConst.GL_RGBA8;
 
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void satin$setFormat(boolean useDepth, CallbackInfo ci) {

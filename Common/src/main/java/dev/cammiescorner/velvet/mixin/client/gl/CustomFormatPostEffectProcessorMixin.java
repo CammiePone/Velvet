@@ -19,6 +19,7 @@ package dev.cammiescorner.velvet.mixin.client.gl;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.llamalad7.mixinextras.sugar.Local;
 import dev.cammiescorner.velvet.impl.CustomFormatRenderTarget;
 import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -34,7 +35,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(PostChain.class)
 public class CustomFormatPostEffectProcessorMixin {
 	@Inject(method = "parseTargetNode", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/PostChain;addTempTarget(Ljava/lang/String;II)V", ordinal = 1), locals = LocalCapture.CAPTURE_FAILSOFT)
-	private void parseCustomTargetFormat(JsonElement jsonTarget, CallbackInfo ci, JsonObject jsonObject) {
+	private void parseCustomTargetFormat(JsonElement jsonTarget, CallbackInfo ci, @Local JsonObject jsonObject) {
 		String format = GsonHelper.getAsString(jsonObject, CustomFormatRenderTarget.FORMAT_KEY, null);
 		if(format != null) {
 			CustomFormatRenderTarget.prepareCustomFormat(format);

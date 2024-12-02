@@ -53,7 +53,6 @@ public abstract class LevelRendererMixin {
 		return frustum;
 	}
 
-
 	@Inject(
 		method = "renderLevel",
 		at = @At(value = "CONSTANT", args = "stringValue=entities", ordinal = 0)
@@ -78,7 +77,7 @@ public abstract class LevelRendererMixin {
 			@At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;depthMask(Z)V", ordinal = 1, shift = At.Shift.AFTER, remap = false)
 		}
 	)
-	private void hookPostWorldRender(DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f frustumMatrix, Matrix4f projectionMatrix, CallbackInfo ci, @Local PoseStack matrices) {
+	private void hookPostLevelRender(DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f frustumMatrix, Matrix4f projectionMatrix, CallbackInfo ci, @Local PoseStack matrices) {
 		((ReadableDepthRenderTarget) Minecraft.getInstance().getMainRenderTarget()).freezeDepthMap();
 		PostLevelRenderCallback.EVENT.invoker().onLevelRendered(matrices, frustumMatrix, projectionMatrix, camera, deltaTracker.getGameTimeDeltaPartialTick(true));
 	}
