@@ -17,7 +17,6 @@
  */
 package org.ladysnake.satindepthtest;
 
-import dev.cammiescorner.velvet.api.event.PostLevelRenderCallbackV2;
 import dev.cammiescorner.velvet.api.event.ShaderEffectRenderCallback;
 import dev.upcraft.sparkweave.api.entrypoint.ClientEntryPoint;
 import dev.upcraft.sparkweave.api.logging.SparkweaveLoggerFactory;

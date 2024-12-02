@@ -17,31 +17,29 @@
  */
 package dev.cammiescorner.velvet.api.event;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import dev.upcraft.sparkweave.api.event.Event;
 import dev.upcraft.sparkweave.event.EventFactoryImpl;
 import net.minecraft.client.Camera;
+import org.joml.Matrix4f;
 
-/**
- * Use {@link PostLevelRenderCallbackV3}
- */
-@Deprecated
 @FunctionalInterface
 public interface PostLevelRenderCallback {
 	/**
 	 * Fired after Minecraft has rendered everything in the world, before it renders hands, HUDs and GUIs.
-	 *
-	 * <p>{@link net.minecraft.client.renderer.PostChain}s <strong>must not</strong> be rendered in this callback, as they will prevent
-	 * {@link net.minecraft.client.GraphicsStatus#FABULOUS fabulous graphics} and other effects from working properly.
 	 */
 	Event<PostLevelRenderCallback> EVENT = EventFactoryImpl.create(PostLevelRenderCallback.class,
-			(listeners) -> (camera, tickDelta) -> {
+			(listeners) -> (matrices, projectionMat, modelViewMath, camera, tickDelta) -> {
 				for(PostLevelRenderCallback handler : listeners)
-					handler.onLevelRendered(camera, tickDelta);
+					handler.onLevelRendered(matrices, projectionMat, modelViewMath, camera, tickDelta);
 			});
 
 	/**
-	 * @param camera    the camera from which perspective the world is being rendered
-	 * @param tickDelta fraction of time between two consecutive ticks (before 0 and 1)
+	 * @param posingStack   a blank {@link PoseStack} that can be used for rendering custom elements
+	 * @param modelViewMat  the model-view matrix corresponding to the camera's perspective
+	 * @param projectionMat the base projection matrix for world rendering
+	 * @param camera        the camera from which perspective the world is being rendered
+	 * @param tickDelta     fraction of time between two consecutive ticks (before 0 and 1)
 	 */
-	void onLevelRendered(Camera camera, float tickDelta);
+	void onLevelRendered(PoseStack posingStack, Matrix4f modelViewMat, Matrix4f projectionMat, Camera camera, float tickDelta);
 }
