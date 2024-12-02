@@ -29,44 +29,44 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class RenderLayerSupplier {
+public class RenderTypeSupplier {
 	private final Consumer<RenderType.CompositeState.CompositeStateBuilder> transform;
-	private final Map<RenderType, RenderType> renderLayerCache = new HashMap<>();
+	private final Map<RenderType, RenderType> renderTypeCache = new HashMap<>();
 	private final String uniqueName;
 	private final @Nullable VertexFormat vertexFormat;
 
-	public static RenderLayerSupplier renderTarget(String name, Runnable setupState, Runnable cleanupState) {
+	public static RenderTypeSupplier renderTarget(String name, Runnable setupState, Runnable cleanupState) {
 		RenderStateShard.OutputStateShard target = new RenderStateShard.OutputStateShard(
 				name + "_target",
 				setupState,
 				cleanupState
 		);
-		return new RenderLayerSupplier(name, builder -> builder.setOutputState(target));
+		return new RenderTypeSupplier(name, builder -> builder.setOutputState(target));
 	}
 
-	public static RenderLayerSupplier shader(String name, VertexFormat vertexFormat, Supplier<ShaderInstance> shaderSupplier) {
+	public static RenderTypeSupplier shader(String name, VertexFormat vertexFormat, Supplier<ShaderInstance> shaderSupplier) {
 		RenderStateShard shader = Helper.makeShader(shaderSupplier);
-		return new RenderLayerSupplier(name, vertexFormat, builder -> Helper.applyShader(builder, shader));
+		return new RenderTypeSupplier(name, vertexFormat, builder -> Helper.applyShader(builder, shader));
 	}
 
-	public RenderLayerSupplier(String name, Consumer<RenderType.CompositeState.CompositeStateBuilder> transformer) {
+	public RenderTypeSupplier(String name, Consumer<RenderType.CompositeState.CompositeStateBuilder> transformer) {
 		this(name, null, transformer);
 	}
 
-	public RenderLayerSupplier(String name, @Nullable VertexFormat vertexFormat, Consumer<RenderType.CompositeState.CompositeStateBuilder> transformer) {
+	public RenderTypeSupplier(String name, @Nullable VertexFormat vertexFormat, Consumer<RenderType.CompositeState.CompositeStateBuilder> transformer) {
 		this.uniqueName = name;
 		this.vertexFormat = vertexFormat;
 		this.transform = transformer;
 	}
 
-	public RenderType getRenderLayer(RenderType baseLayer) {
-		RenderType existing = this.renderLayerCache.get(baseLayer);
+	public RenderType getRenderType(RenderType baseLayer) {
+		RenderType existing = this.renderTypeCache.get(baseLayer);
 		if(existing != null) {
 			return existing;
 		}
 		String newName = ((RenderStateShardAccessor) baseLayer).getName() + "_" + this.uniqueName;
 		RenderType newLayer = RenderTypeDuplicator.copy(baseLayer, newName, this.vertexFormat, this.transform);
-		this.renderLayerCache.put(baseLayer, newLayer);
+		this.renderTypeCache.put(baseLayer, newLayer);
 		return newLayer;
 	}
 

@@ -56,5 +56,5 @@ public interface ManagedCoreShader extends UniformFinder {
 	 * @return a render layer using this shader program
 	 * @see RenderTypeHelper#copy(RenderType, String, Consumer)
 	 */
-	RenderType getRenderLayer(RenderType baseLayer);
+	RenderType getRenderType(RenderType baseLayer);
 }

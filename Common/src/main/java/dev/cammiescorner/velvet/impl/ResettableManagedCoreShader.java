@@ -39,7 +39,7 @@ public final class ResettableManagedCoreShader extends ResettableManagedShaderBa
 	 * Callback to run once each time the shader effect is initialized
 	 */
 	private final Consumer<ManagedCoreShader> initCallback;
-	private final RenderLayerSupplier renderLayerSupplier;
+	private final RenderTypeSupplier renderTypeSupplier;
 	private final VertexFormat vertexFormat;
 	private final Map<String, ManagedSamplerUniformV1> managedSamplers = new HashMap<>();
 
@@ -47,7 +47,7 @@ public final class ResettableManagedCoreShader extends ResettableManagedShaderBa
 		super(location);
 		this.vertexFormat = vertexFormat;
 		this.initCallback = initCallback;
-		this.renderLayerSupplier = RenderLayerSupplier.shader(
+		this.renderTypeSupplier = RenderTypeSupplier.shader(
 				String.format("%s_%d", location, System.identityHashCode(this)),
 				vertexFormat,
 				this::getProgram);
@@ -73,8 +73,8 @@ public final class ResettableManagedCoreShader extends ResettableManagedShaderBa
 	}
 
 	@Override
-	public RenderType getRenderLayer(RenderType type) {
-		return this.renderLayerSupplier.getRenderLayer(type);
+	public RenderType getRenderType(RenderType type) {
+		return this.renderTypeSupplier.getRenderType(type);
 	}
 
 	@Override

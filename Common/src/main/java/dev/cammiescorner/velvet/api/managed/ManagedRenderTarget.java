@@ -50,6 +50,13 @@ public interface ManagedRenderTarget {
 	/**
 	 * Draws this render target, scaling to the default render target's
 	 * {@linkplain Window#getWidth() width} and {@linkplain Window#getWidth() height}.
+	 * Disables blending by default.
+	 */
+	void draw();
+
+	/**
+	 * Draws this render target, scaling to the default render target's
+	 * {@linkplain Window#getWidth() width} and {@linkplain Window#getWidth() height}.
 	 */
 	void draw(boolean disableBlend);
 

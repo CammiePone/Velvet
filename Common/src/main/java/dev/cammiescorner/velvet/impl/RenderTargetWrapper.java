@@ -27,13 +27,13 @@ import net.minecraft.client.renderer.RenderType;
 import org.jetbrains.annotations.Nullable;
 
 public final class RenderTargetWrapper implements ManagedRenderTarget {
-	private final RenderLayerSupplier renderLayerSupplier;
+	private final RenderTypeSupplier renderTypeSupplier;
 	private final String name;
 	@Nullable private RenderTarget wrapped;
 
 	RenderTargetWrapper(String name) {
 		this.name = name;
-		this.renderLayerSupplier = RenderLayerSupplier.renderTarget(
+		this.renderTypeSupplier = RenderTypeSupplier.renderTarget(
 				this.name + System.identityHashCode(this),
 				() -> this.beginWrite(false),
 				() -> Minecraft.getInstance().getMainRenderTarget().bindWrite(false)
@@ -76,6 +76,11 @@ public final class RenderTargetWrapper implements ManagedRenderTarget {
 	}
 
 	@Override
+	public void draw() {
+		this.draw(true);
+	}
+
+	@Override
 	public void draw(boolean disableBlend) {
 		Window window = Minecraft.getInstance().getWindow();
 		this.draw(window.getWidth(), window.getHeight(), disableBlend);
@@ -102,6 +107,6 @@ public final class RenderTargetWrapper implements ManagedRenderTarget {
 
 	@Override
 	public RenderType getRenderType(RenderType base) {
-		return this.renderLayerSupplier.getRenderLayer(base);
+		return this.renderTypeSupplier.getRenderType(base);
 	}
 }

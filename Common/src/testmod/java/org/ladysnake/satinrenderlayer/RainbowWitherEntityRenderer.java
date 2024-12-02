@@ -39,6 +39,6 @@ public class RainbowWitherEntityRenderer extends WitherBossRenderer {
     @Override
     protected RenderType getRenderType(WitherBoss entity, boolean showBody, boolean translucent, boolean glowing) {
         RenderType baseLayer = super.getRenderType(entity, showBody, translucent, glowing);
-        return baseLayer == null ? null : SatinRenderLayerTest.rainbow.getRenderLayer(baseLayer);
+        return baseLayer == null ? null : SatinRenderLayerTest.rainbow.getRenderType(baseLayer);
     }
 }

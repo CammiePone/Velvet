@@ -48,7 +48,7 @@ public final class RenderTypeDuplicator {
 
 	private static void checkDefaultImpl(RenderType existing) {
 		if(!(existing instanceof VelvetRenderType)) {
-			throw new IllegalArgumentException("Unrecognized RenderLayer implementation " + existing.getClass() + ". Layer duplication is only applicable to the default (MultiPhase) implementation");
+			throw new IllegalArgumentException("Unrecognized RenderType implementation " + existing.getClass() + ". Type duplication is only applicable to the default (MultiPhase) implementation");
 		}
 	}
 
