@@ -17,6 +17,7 @@
  */
 package org.ladysnake.satindepthtest;
 
+import dev.cammiescorner.velvet.api.event.PostLevelRenderCallback;
 import dev.cammiescorner.velvet.api.event.ShaderEffectRenderCallback;
 import dev.upcraft.sparkweave.api.entrypoint.ClientEntryPoint;
 import dev.upcraft.sparkweave.api.logging.SparkweaveLoggerFactory;
@@ -37,7 +38,7 @@ public class SatinDepthTest implements ClientEntryPoint {
 		LOGGER.info("Loading SatinDepthTest");
 		EndClientTickEvent.EVENT.register(DepthFx.INSTANCE);
 		ShaderEffectRenderCallback.EVENT.register(DepthFx.INSTANCE);
-		PostLevelRenderCallbackV2.EVENT.register(DepthFx.INSTANCE);
+		PostLevelRenderCallback.EVENT.register(DepthFx.INSTANCE);
 	}
 
 	public static class DepthTestDebugBehavior extends DebugBehavior.Client {

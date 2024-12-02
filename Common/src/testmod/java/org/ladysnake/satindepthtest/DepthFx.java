@@ -18,6 +18,7 @@
 package org.ladysnake.satindepthtest;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.cammiescorner.velvet.api.event.PostLevelRenderCallback;
 import dev.cammiescorner.velvet.api.event.ShaderEffectRenderCallback;
 import dev.cammiescorner.velvet.api.experimental.ReadableDepthRenderTarget;
 import dev.cammiescorner.velvet.api.managed.ManagedShaderEffect;
@@ -36,7 +37,7 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.ladysnake.satintestcore.event.EndClientTickEvent;
 
-public class DepthFx implements PostLevelRenderCallbackV2, ShaderEffectRenderCallback, EndClientTickEvent {
+public class DepthFx implements PostLevelRenderCallback, ShaderEffectRenderCallback, EndClientTickEvent {
     public static final ResourceLocation FANCY_NIGHT_SHADER_ID = ResourceLocation.fromNamespaceAndPath(SatinDepthTest.MOD_ID, "shaders/post/rainbow_ping.json");
     public static final DepthFx INSTANCE = new DepthFx();
 
@@ -70,17 +71,17 @@ public class DepthFx implements PostLevelRenderCallbackV2, ShaderEffectRenderCal
         }
     }
 
-    @Override
-    public void onLevelRendered(PoseStack matrices, Camera camera, float tickDelta) {
-        if (isNight()) {
-            uniformSTime.set((ticks + tickDelta) / 20f);
-            uniformInverseTransformMatrix.set(GlMatrices.getInverseTransformMatrix(projectionMatrix));
-            Vec3 cameraPos = camera.getPosition();
-            uniformCameraPosition.set((float)cameraPos.x, (float)cameraPos.y, (float)cameraPos.z);
-            Entity e = camera.getEntity();
-            uniformCenter.set(lerpf(e.getX(), e.xo, tickDelta), lerpf(e.getY(), e.yo, tickDelta), lerpf(e.getZ(), e.zo, tickDelta));
-        }
-    }
+	@Override
+	public void onLevelRendered(PoseStack posingStack, Matrix4f modelViewMat, Matrix4f projectionMat, Camera camera, float tickDelta) {
+		if (isNight()) {
+			uniformSTime.set((ticks + tickDelta) / 20f);
+			uniformInverseTransformMatrix.set(GlMatrices.getInverseTransformMatrix(projectionMatrix));
+			Vec3 cameraPos = camera.getPosition();
+			uniformCameraPosition.set((float)cameraPos.x, (float)cameraPos.y, (float)cameraPos.z);
+			Entity e = camera.getEntity();
+			uniformCenter.set(lerpf(e.getX(), e.xo, tickDelta), lerpf(e.getY(), e.yo, tickDelta), lerpf(e.getZ(), e.zo, tickDelta));
+		}
+	}
 
     @Override
     public void renderShaderEffects(float tickDelta) {
@@ -90,4 +91,6 @@ public class DepthFx implements PostLevelRenderCallbackV2, ShaderEffectRenderCal
     private static float lerpf(double n, double prevN, float tickDelta) {
         return (float) Mth.lerp(tickDelta, prevN, n);
     }
+
+
 }
