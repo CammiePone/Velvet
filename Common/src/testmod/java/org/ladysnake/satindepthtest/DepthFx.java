@@ -18,7 +18,7 @@
 package org.ladysnake.satindepthtest;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.cammiescorner.velvet.api.event.PostWorldRenderCallbackV2;
+import dev.cammiescorner.velvet.api.event.PostLevelRenderCallbackV2;
 import dev.cammiescorner.velvet.api.event.ShaderEffectRenderCallback;
 import dev.cammiescorner.velvet.api.experimental.ReadableDepthRenderTarget;
 import dev.cammiescorner.velvet.api.managed.ManagedShaderEffect;
@@ -37,7 +37,7 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.ladysnake.satintestcore.event.EndClientTickEvent;
 
-public class DepthFx implements PostWorldRenderCallbackV2, ShaderEffectRenderCallback, EndClientTickEvent {
+public class DepthFx implements PostLevelRenderCallbackV2, ShaderEffectRenderCallback, EndClientTickEvent {
     public static final ResourceLocation FANCY_NIGHT_SHADER_ID = ResourceLocation.fromNamespaceAndPath(SatinDepthTest.MOD_ID, "shaders/post/rainbow_ping.json");
     public static final DepthFx INSTANCE = new DepthFx();
 
@@ -72,7 +72,7 @@ public class DepthFx implements PostWorldRenderCallbackV2, ShaderEffectRenderCal
     }
 
     @Override
-    public void onWorldRendered(PoseStack matrices, Camera camera, float tickDelta) {
+    public void onLevelRendered(PoseStack matrices, Camera camera, float tickDelta) {
         if (isNight()) {
             uniformSTime.set((ticks + tickDelta) / 20f);
             uniformInverseTransformMatrix.set(GlMatrices.getInverseTransformMatrix(projectionMatrix));

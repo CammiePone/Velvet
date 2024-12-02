@@ -24,24 +24,24 @@ import net.minecraft.client.Camera;
 import org.joml.Matrix4f;
 
 @FunctionalInterface
-public interface PostWorldRenderCallbackV3 {
+public interface PostLevelRenderCallbackV3 {
 	/**
 	 * Fired after Minecraft has rendered everything in the world, before it renders hands, HUDs and GUIs.
 	 */
-	Event<PostWorldRenderCallbackV3> EVENT = EventFactoryImpl.create(PostWorldRenderCallbackV3.class,
+	Event<PostLevelRenderCallbackV3> EVENT = EventFactoryImpl.create(PostLevelRenderCallbackV3.class,
 			(listeners) -> (matrices, projectionMat, modelViewMath, camera, tickDelta) -> {
-				PostWorldRenderCallbackV2.EVENT.invoker().onWorldRendered(matrices, camera, tickDelta);
-				for(PostWorldRenderCallbackV3 handler : listeners) {
-					handler.onWorldRendered(matrices, projectionMat, modelViewMath, camera, tickDelta);
-				}
+				PostLevelRenderCallbackV2.EVENT.invoker().onLevelRendered(matrices, camera, tickDelta);
+
+				for(PostLevelRenderCallbackV3 handler : listeners)
+					handler.onLevelRendered(matrices, projectionMat, modelViewMath, camera, tickDelta);
 			});
 
 	/**
 	 * @param posingStack   a blank {@link PoseStack} that can be used for rendering custom elements
-	 * @param projectionMat the base projection matrix for world rendering
 	 * @param modelViewMat  the model-view matrix corresponding to the camera's perspective
+	 * @param projectionMat the base projection matrix for world rendering
 	 * @param camera        the camera from which perspective the world is being rendered
 	 * @param tickDelta     fraction of time between two consecutive ticks (before 0 and 1)
 	 */
-	void onWorldRendered(PoseStack posingStack, Matrix4f projectionMat, Matrix4f modelViewMat, Camera camera, float tickDelta);
+	void onLevelRendered(PoseStack posingStack, Matrix4f modelViewMat, Matrix4f projectionMat, Camera camera, float tickDelta);
 }

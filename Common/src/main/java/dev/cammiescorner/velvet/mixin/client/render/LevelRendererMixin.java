@@ -17,7 +17,7 @@
  */
 package dev.cammiescorner.velvet.mixin.client.render;
 
-import dev.cammiescorner.velvet.api.event.WorldRendererReloadCallback;
+import dev.cammiescorner.velvet.api.event.LevelRendererReloadCallback;
 import net.minecraft.client.renderer.LevelRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,6 +28,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LevelRendererMixin {
 	@Inject(method = "allChanged", at = @At("RETURN"))
 	private void reloadShaders(CallbackInfo ci) {
-		WorldRendererReloadCallback.EVENT.invoker().onRendererReload((LevelRenderer) (Object) this);
+		LevelRendererReloadCallback.EVENT.invoker().onRendererReload((LevelRenderer) (Object) this);
 	}
 }

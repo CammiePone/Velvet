@@ -22,7 +22,7 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import dev.cammiescorner.velvet.Velvet;
 import dev.cammiescorner.velvet.api.event.ResolutionChangeCallback;
-import dev.cammiescorner.velvet.api.event.WorldRendererReloadCallback;
+import dev.cammiescorner.velvet.api.event.LevelRendererReloadCallback;
 import dev.cammiescorner.velvet.api.managed.ManagedCoreShader;
 import dev.cammiescorner.velvet.api.managed.ManagedShaderEffect;
 import dev.cammiescorner.velvet.api.managed.ShaderEffectManager;
@@ -41,7 +41,7 @@ import java.util.function.Consumer;
  * @see ShaderEffectManager
  * @see ResettableManagedShaderEffect
  */
-public final class ReloadableShaderEffectManager implements ShaderEffectManager, ResolutionChangeCallback, WorldRendererReloadCallback {
+public final class ReloadableShaderEffectManager implements ShaderEffectManager, ResolutionChangeCallback, LevelRendererReloadCallback {
 	public static final ReloadableShaderEffectManager INSTANCE = new ReloadableShaderEffectManager();
 
 	private final Set<ResettableManagedShaderBase<?>> managedShaders = new ReferenceOpenHashSet<>();

@@ -18,7 +18,7 @@
 package dev.cammiescorner.velvet.api.experimental;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
-import dev.cammiescorner.velvet.api.event.PostWorldRenderCallback;
+import dev.cammiescorner.velvet.api.event.PostLevelRenderCallback;
 import net.minecraft.client.GraphicsStatus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -39,7 +39,7 @@ public interface ReadableDepthRenderTarget {
 	 * For most intents and purposes, this is the texture that API consumers should read from.
 	 *
 	 * <p>This texture is updated only when {@link #freezeDepthMap()} is called. For the main  render target,
-	 * it is updated automatically right before {@link PostWorldRenderCallback#EVENT} is fired.
+	 * it is updated automatically right before {@link PostLevelRenderCallback#EVENT} is fired.
 	 * <strong>Note that the content of the main  render target's depth texture depends on the graphic quality setting.</strong>
 	 * With {@link GraphicsStatus#FABULOUS}, no translucent object will appear on the main depth texture, so consumers may
 	 * need to also use the depth textures from the various layers used by the {@link LevelRenderer}'s transparency shader.
@@ -60,7 +60,7 @@ public interface ReadableDepthRenderTarget {
 	 * {@link #getStillDepthMap()}.
 	 * <p>
 	 * This is called by default on the {@link Minecraft#getMainRenderTarget()} main  render target
-	 * once every frame, right before {@link PostWorldRenderCallback} is fired.
+	 * once every frame, right before {@link PostLevelRenderCallback} is fired.
 	 * <p>
 	 * Calling this method will bind {@code this}  render target.
 	 */

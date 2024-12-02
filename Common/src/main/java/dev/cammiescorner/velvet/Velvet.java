@@ -1,7 +1,7 @@
 package dev.cammiescorner.velvet;
 
 import dev.cammiescorner.velvet.api.event.ResolutionChangeCallback;
-import dev.cammiescorner.velvet.api.event.WorldRendererReloadCallback;
+import dev.cammiescorner.velvet.api.event.LevelRendererReloadCallback;
 import dev.cammiescorner.velvet.service.Loader;
 import dev.cammiescorner.velvet.impl.ReloadableShaderEffectManager;
 import dev.upcraft.sparkweave.api.entrypoint.ClientEntryPoint;
@@ -20,7 +20,7 @@ public class Velvet implements ClientEntryPoint {
 	@Override
 	public void onInitializeClient(ModContainer mod) {
 		ResolutionChangeCallback.EVENT.register(ReloadableShaderEffectManager.INSTANCE);
-		WorldRendererReloadCallback.EVENT.register(ReloadableShaderEffectManager.INSTANCE);
+		LevelRendererReloadCallback.EVENT.register(ReloadableShaderEffectManager.INSTANCE);
 
 		if(LOADER.isModLoaded("optifabric") || LOADER.isModLoaded("optifine"))
 			LOGGER.warn("[Velvet] Optifine present in the instance, custom entity post process shaders will not work");

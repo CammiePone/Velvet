@@ -21,7 +21,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.cammiescorner.velvet.api.event.EntitiesPostRenderCallback;
 import dev.cammiescorner.velvet.api.event.EntitiesPreRenderCallback;
-import dev.cammiescorner.velvet.api.event.PostWorldRenderCallbackV3;
+import dev.cammiescorner.velvet.api.event.PostLevelRenderCallbackV3;
 import dev.cammiescorner.velvet.api.experimental.ReadableDepthRenderTarget;
 import net.minecraft.client.Camera;
 import net.minecraft.client.DeltaTracker;
@@ -80,6 +80,6 @@ public abstract class LevelRendererMixin {
 	)
 	private void hookPostWorldRender(DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f frustumMatrix, Matrix4f projectionMatrix, CallbackInfo ci, @Local PoseStack matrices) {
 		((ReadableDepthRenderTarget) Minecraft.getInstance().getMainRenderTarget()).freezeDepthMap();
-		PostWorldRenderCallbackV3.EVENT.invoker().onWorldRendered(matrices, frustumMatrix, projectionMatrix, camera, deltaTracker.getGameTimeDeltaPartialTick(true));
+		PostLevelRenderCallbackV3.EVENT.invoker().onLevelRendered(matrices, frustumMatrix, projectionMatrix, camera, deltaTracker.getGameTimeDeltaPartialTick(true));
 	}
 }

@@ -29,8 +29,7 @@ import org.jetbrains.annotations.Nullable;
 public final class RenderTargetWrapper implements ManagedRenderTarget {
 	private final RenderLayerSupplier renderLayerSupplier;
 	private final String name;
-	@Nullable
-	private RenderTarget wrapped;
+	@Nullable private RenderTarget wrapped;
 
 	RenderTargetWrapper(String name) {
 		this.name = name;
@@ -48,9 +47,8 @@ public final class RenderTargetWrapper implements ManagedRenderTarget {
 		else {
 			this.wrapped = shaderEffect.getTempTarget(this.name);
 
-			if(this.wrapped == null) {
+			if(this.wrapped == null)
 				Velvet.LOGGER.warn("No target framebuffer found with name {} in shader {}", this.name, shaderEffect.getName());
-			}
 		}
 	}
 

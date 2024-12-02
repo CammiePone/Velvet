@@ -17,32 +17,36 @@
  */
 package dev.cammiescorner.velvet.api.event;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import dev.upcraft.sparkweave.api.event.Event;
 import dev.upcraft.sparkweave.event.EventFactoryImpl;
 import net.minecraft.client.Camera;
+import net.minecraft.client.GraphicsStatus;
 
 /**
- * @see PostWorldRenderCallbackV2
- * @see PostWorldRenderCallbackV3
+ * Use {@link PostLevelRenderCallbackV3}
  */
+@Deprecated
 @FunctionalInterface
-public interface PostWorldRenderCallback {
+public interface PostLevelRenderCallbackV2 {
 	/**
 	 * Fired after Minecraft has rendered everything in the world, before it renders hands, HUDs and GUIs.
 	 *
 	 * <p>{@link net.minecraft.client.renderer.PostChain}s <strong>must not</strong> be rendered in this callback, as they will prevent
-	 * {@link net.minecraft.client.GraphicsStatus#FABULOUS fabulous graphics} and other effects from working properly.
+	 * {@link GraphicsStatus#FABULOUS fabulous graphics} and other effects from working properly.
 	 */
-	Event<PostWorldRenderCallback> EVENT = EventFactoryImpl.create(PostWorldRenderCallback.class,
-			(listeners) -> (camera, tickDelta) -> {
-				for(PostWorldRenderCallback handler : listeners) {
-					handler.onWorldRendered(camera, tickDelta);
-				}
+	Event<PostLevelRenderCallbackV2> EVENT = EventFactoryImpl.create(PostLevelRenderCallbackV2.class,
+			(listeners) -> (posingStack, camera, tickDelta) -> {
+				PostLevelRenderCallback.EVENT.invoker().onLevelRendered(camera, tickDelta);
+
+				for(PostLevelRenderCallbackV2 handler : listeners)
+					handler.onLevelRendered(posingStack, camera, tickDelta);
 			});
 
 	/**
-	 * @param camera    the camera from which perspective the world is being rendered
-	 * @param tickDelta fraction of time between two consecutive ticks (before 0 and 1)
+	 * @param posingStack a blank {@link PoseStack} that can be used for rendering custom elements
+	 * @param camera      the camera from which perspective the world is being rendered
+	 * @param tickDelta   fraction of time between two consecutive ticks (before 0 and 1)
 	 */
-	void onWorldRendered(Camera camera, float tickDelta);
+	void onLevelRendered(PoseStack posingStack, Camera camera, float tickDelta);
 }

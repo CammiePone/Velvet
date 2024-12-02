@@ -22,13 +22,13 @@ import dev.upcraft.sparkweave.event.EventFactoryImpl;
 import net.minecraft.client.renderer.LevelRenderer;
 
 @FunctionalInterface
-public interface WorldRendererReloadCallback {
+public interface LevelRendererReloadCallback {
 	/**
 	 * Fired in {@link LevelRenderer#allChanged()}, typically called when video settings are updated or the player joins a world
 	 */
-	Event<WorldRendererReloadCallback> EVENT = EventFactoryImpl.create(WorldRendererReloadCallback.class,
+	Event<LevelRendererReloadCallback> EVENT = EventFactoryImpl.create(LevelRendererReloadCallback.class,
 			(listeners) -> (renderer) -> {
-				for(WorldRendererReloadCallback event : listeners) {
+				for(LevelRendererReloadCallback event : listeners) {
 					event.onRendererReload(renderer);
 				}
 			});

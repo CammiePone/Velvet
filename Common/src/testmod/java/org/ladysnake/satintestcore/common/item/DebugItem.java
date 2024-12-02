@@ -42,10 +42,10 @@ public class DebugItem extends Item {
 
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 	    ItemStack stack = player.getItemInHand(hand);
 	    Holder<DebugBehavior> currentDebugBehavior = stack.getOrDefault(SatinTestDataComponents.DEBUG_BEHAVIOR.get(), SatinTestDebugBehaviors.BASIC.holder());
-        if (player.isCrouching() && !world.isClientSide()) {
+        if (player.isCrouching() && !level.isClientSide()) {
             if (SatinTestDebugBehaviors.DEBUG_BEHAVIORS_REGISTRY.size() > 1) {
 
 				List<Holder<DebugBehavior>> all = SatinTestDebugBehaviors.DEBUG_BEHAVIORS_REGISTRY.asLookup().listElements().sorted(Comparator.comparing(it -> it.key().location())).map(it -> (Holder<DebugBehavior>) it).toList();
@@ -58,7 +58,7 @@ public class DebugItem extends Item {
                 player.displayClientMessage(Component.translatable("message.velvettestcore.debug_behavior_switched", newDebugBehavior.value().getName()), true);
             }
         } else if (!player.isCrouching()) {
-	        currentDebugBehavior.value().call(world, player, hand);
+	        currentDebugBehavior.value().call(level, player, hand);
         }
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
     }
