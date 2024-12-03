@@ -70,4 +70,12 @@ public interface ReadableDepthRenderTarget {
 	static ReadableDepthRenderTarget getFrom(RenderTarget target) {
 		return (ReadableDepthRenderTarget) target;
 	}
+
+	static int getStillDepthMap(RenderTarget target) {
+		return getFrom(target).getStillDepthMap();
+	}
+
+	static void freezeDepthMap(RenderTarget target) {
+		getFrom(target).freezeDepthMap();
+	}
 }
