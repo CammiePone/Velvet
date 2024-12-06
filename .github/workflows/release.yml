@@ -51,30 +51,30 @@ jobs:
                     files: |
                         **/build/libs/!(*-@(dev|sources|javadoc|slim)).jar
                         **/build/libs/*-@(sources|javadoc).jar
-#            -   name: Publish (Fabric)
-#                id: publish_fabric
-#                uses: Kir-Antipov/mc-publish@995edadc13559a8b28d0b7e6571229f067ec7659
-#                with:
-#                    modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-#                    curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-#                    version: ${{ github.ref_name }}+Fabric
-#                    version-type: beta
-#                    files: |
-#                        Fabric/build/libs/!(*-@(dev|sources|javadoc|slim)).jar
-#                        Fabric/build/libs/*-@(sources|javadoc).jar
-#            -   name: Publish (NeoForge)
-#                uses: Kir-Antipov/mc-publish@995edadc13559a8b28d0b7e6571229f067ec7659
-#                with:
-#                    modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-#                    curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-#                    version: ${{ github.ref_name }}+NeoForge
-#                    files: |
-#                        NeoForge/build/libs/!(*-@(dev|sources|javadoc|slim)).jar
-#                        NeoForge/build/libs/*-@(sources|javadoc).jar
-#            -   name: Notify Discord
-#                uses: Up-Mods/action-discord-release@main
-#                with:
-#                    version: ${{ github.ref_name }}
-#                    webhook-url: ${{ secrets.ANNOUNCEMENT_WEBHOOK_URL }}
-#                    curseforge-project-id: ${{ steps.publish_fabric.outputs.curseforge-id }}
-#                    modrinth-project-id: ${{ steps.publish_fabric.outputs.modrinth-id }}
+            -   name: Publish (Fabric)
+                id: publish_fabric
+                uses: Kir-Antipov/mc-publish@995edadc13559a8b28d0b7e6571229f067ec7659
+                with:
+                    modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+                    curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+                    version: ${{ github.ref_name }}+Fabric
+                    version-type: beta
+                    files: |
+                        Fabric/build/libs/!(*-@(dev|sources|javadoc|slim)).jar
+                        Fabric/build/libs/*-@(sources|javadoc).jar
+            -   name: Publish (NeoForge)
+                uses: Kir-Antipov/mc-publish@995edadc13559a8b28d0b7e6571229f067ec7659
+                with:
+                    modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+                    curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+                    version: ${{ github.ref_name }}+NeoForge
+                    files: |
+                        NeoForge/build/libs/!(*-@(dev|sources|javadoc|slim)).jar
+                        NeoForge/build/libs/*-@(sources|javadoc).jar
+            -   name: Notify Discord
+                uses: Up-Mods/action-discord-release@main
+                with:
+                    version: ${{ github.ref_name }}
+                    webhook-url: ${{ secrets.ANNOUNCEMENT_WEBHOOK_URL }}
+                    curseforge-project-id: ${{ steps.publish_fabric.outputs.curseforge-id }}
+                    modrinth-project-id: ${{ steps.publish_fabric.outputs.modrinth-id }}
